@@ -1,0 +1,62 @@
+[gd_scene load_steps=10 format=3 uid="uid://g5kwvc0ak78m"]
+
+[ext_resource type="PackedScene" uid="uid://7cbhbnwj6ihi" path="res://objects/cars/car.tscn" id="1_vtq5a"]
+[ext_resource type="Script" path="res://objects/cars/ai.gd" id="2_vkg7a"]
+[ext_resource type="Script" path="res://objects/cars/Whiskers.gd" id="3_ucvkr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sewkj"]
+albedo_color = Color(0.0666667, 0.133333, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x35v6"]
+resource_local_to_scene = true
+resource_name = "Car"
+material = SubResource("StandardMaterial3D_sewkj")
+size = Vector3(1, 0.4, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yhv5k"]
+size = Vector3(0.5, 0.1, 10)
+
+[sub_resource type="SphereMesh" id="SphereMesh_bhdgk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_26nqt"]
+size = Vector3(0.5, 0.1, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k403e"]
+size = Vector3(0.5, 0.1, 10)
+
+[node name="Car" instance=ExtResource("1_vtq5a")]
+script = ExtResource("2_vkg7a")
+min_look_ahead = 5.0
+stuck_speed_threshold = 0.5
+stuck_time_limit = 3.0
+
+[node name="MeshInstance3D" parent="." index="1"]
+mesh = SubResource("BoxMesh_x35v6")
+
+[node name="Whiskers" type="Node3D" parent="." index="6"]
+script = ExtResource("3_ucvkr")
+dis_scale = 1.0
+
+[node name="Left" type="ShapeCast3D" parent="Whiskers" index="0"]
+shape = SubResource("BoxShape3D_yhv5k")
+target_position = Vector3(0.5, 0, 1.25)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Whiskers/Left" index="0"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+mesh = SubResource("SphereMesh_bhdgk")
+
+[node name="Forward" type="ShapeCast3D" parent="Whiskers" index="1"]
+shape = SubResource("BoxShape3D_26nqt")
+target_position = Vector3(0, 0, 1.25)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Whiskers/Forward" index="0"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+mesh = SubResource("SphereMesh_bhdgk")
+
+[node name="Right" type="ShapeCast3D" parent="Whiskers" index="2"]
+shape = SubResource("BoxShape3D_k403e")
+target_position = Vector3(-0.5, 0, 1.25)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Whiskers/Right" index="0"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+mesh = SubResource("SphereMesh_bhdgk")

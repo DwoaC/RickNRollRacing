@@ -6,7 +6,7 @@ var reversing = false
 func process_controls(delta):
 	process_engine(delta)
 	process_stearing(delta)
-	super(delta)
+	process_other(delta)
 
 func process_stearing(delta):
 	if Input.is_action_pressed("turn_left"):
@@ -37,3 +37,13 @@ func process_engine(delta):
 		engine_force = 0.0
 		brake = 0.0
 		reversing = false
+
+func process_other(delta):
+	pass
+	#if Input.is_action_pressed("fire"):
+		#fire_weapon()
+
+func _input(event):
+	# Check if the specific action was JUST pressed down
+	if event.is_action_pressed("fire"): 
+		fire_weapon()

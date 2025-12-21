@@ -1,8 +1,11 @@
 extends Node3D
 
 @export var track_path: String = "res://tracks/track_1.tscn"
+@export var cars: Array[Car]
 
-@onready var car: Car = $Player
+var CAR_OFFSET_H = 2.0
+var CAR_OFFSET_Z = 5.0
+
 @onready var camera_rig: Node3D = $CameraRig
 
 const track_folder = "res://tracks/"
@@ -14,12 +17,17 @@ signal max_laps_changed(max_laps)
 
 
 func _ready() -> void:
-	track_changed.connect(car.on_track_changed)
+	for car in cars:
+		track_changed.connect(car.on_track_changed)
+	
 	track_changed.connect($CanvasLayer/CarGUI.on_track_changed)
 	max_laps_changed.connect($CanvasLayer/CarGUI.on_max_laps_changed)
 	
 	load_level()
-	place_car()
+	var index = 0
+	for car in cars:
+		place_car(car, index)
+		index += 1
 
 func load_level():
 	var track_resource = load(track_path)
@@ -34,7 +42,7 @@ func load_level():
 	track_changed.emit(track)
 	max_laps_changed.emit(max_laps)
 
-func place_car():
+func place_car(car, position):
 	if car and track:
 		var curve = track.main_path.curve
 		
@@ -44,4 +52,12 @@ func place_car():
 		car.linear_velocity = Vector3.ZERO
 		car.angular_velocity = Vector3.ZERO
 		
-		print(str(track.first_point_global) + "->" + str(track.second_point_global))
+		var h_offset = position % track.n_starting_columns
+		var z_offset = position / track.n_starting_columns
+		
+		var right_direction = car.global_transform.basis.x
+		var back_direction = -car.global_transform.basis.z
+
+		car.global_position += right_direction * CAR_OFFSET_H * h_offset		
+		car.global_position += back_direction * CAR_OFFSET_Z * z_offset
+

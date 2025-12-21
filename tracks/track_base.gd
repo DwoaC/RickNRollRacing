@@ -3,6 +3,7 @@ extends Node3D
 
 @export var main_path: Path3D
 @export var spawn_index: int = 0
+@export var n_starting_columns = 2
 
 var first_point_global: Vector3:
 	get:

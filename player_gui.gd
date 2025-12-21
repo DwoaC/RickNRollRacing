@@ -2,6 +2,7 @@ extends VBoxContainer
 class_name CarGUI
 
 @export var car: Car
+
 var max_laps:
 	set(value):
 		if is_inf(value):
@@ -11,6 +12,7 @@ var max_laps:
 
 func _ready():
 	# Assuming your car is a child of the level
+	
 	if car:
 		car.speed_updated.connect(_on_player_speed_updated)
 		car.lap_completed.connect(_on_player_lap_completed)

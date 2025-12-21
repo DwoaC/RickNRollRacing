@@ -1,0 +1,293 @@
+[gd_scene load_steps=15 format=3 uid="uid://crudr1e5ueyq5"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_6b45s"]
+[ext_resource type="Script" path="res://world_1.gd" id="1_hm5vt"]
+[ext_resource type="Script" path="res://Camera.gd" id="1_hpef2"]
+[ext_resource type="BoxMesh" uid="uid://bfqrqph2phwr0" path="res://world_1.tres" id="3_xbw4t"]
+[ext_resource type="Script" path="res://CameraRig.gd" id="3_xqgaq"]
+[ext_resource type="Script" path="res://player_gui.gd" id="6_4ol57"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_y8fht"]
+
+[sub_resource type="Sky" id="Sky_x3qja"]
+sky_material = SubResource("PhysicalSkyMaterial_y8fht")
+
+[sub_resource type="Environment" id="Environment_x0m8e"]
+background_mode = 2
+background_energy_multiplier = 2.0
+sky = SubResource("Sky_x3qja")
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
+sdfgi_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0c8po"]
+size = Vector3(1, 0.5, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_18o44"]
+albedo_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0murq"]
+material = SubResource("StandardMaterial3D_18o44")
+height = 0.1
+radial_segments = 8
+rings = 2
+
+[sub_resource type="Environment" id="Environment_bn5ev"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_rigwa"]
+exposure_multiplier = 2.0
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_hm5vt")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_x0m8e")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.187872, -0.608505, 0.77099, -0.295408, 0.713616, 0.635206, -0.936717, -0.347094, -0.0456889, 0, 51.3575, 0)
+light_color = Color(1, 0.819608, 0.615686, 1)
+light_energy = 1.5
+light_angular_distance = 0.5
+shadow_enabled = true
+directional_shadow_max_distance = 8192.0
+
+[node name="Player" type="VehicleBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00662231, 6, 0.0395637)
+mass = 500.0
+gravity_scale = 2.0
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -0.07, 0.1)
+script = ExtResource("1_6b45s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0315075, 0)
+shape = SubResource("BoxShape3D_0c8po")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+mesh = ExtResource("3_xbw4t")
+skeleton = NodePath("")
+
+[node name="WheelFrontLeft" type="VehicleWheel3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.25, 1)
+use_as_steering = true
+wheel_rest_length = 0.25
+wheel_friction_slip = 0.5
+suspension_travel = 0.5
+suspension_stiffness = 30.0
+suspension_max_force = 8000.0
+damping_compression = 3.0
+damping_relaxation = 4.0
+
+[node name="Wheel" type="MeshInstance3D" parent="Player/WheelFrontLeft"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_0murq")
+skeleton = NodePath("../..")
+
+[node name="WheelFrontRight" type="VehicleWheel3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.25, 1)
+use_as_steering = true
+wheel_rest_length = 0.25
+wheel_friction_slip = 0.5
+suspension_travel = 0.5
+suspension_stiffness = 30.0
+suspension_max_force = 8000.0
+damping_compression = 3.0
+damping_relaxation = 4.0
+
+[node name="Wheel" type="MeshInstance3D" parent="Player/WheelFrontRight"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_0murq")
+skeleton = NodePath("../..")
+
+[node name="WheelBackLeft" type="VehicleWheel3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.25, -1)
+use_as_traction = true
+wheel_rest_length = 0.25
+wheel_friction_slip = 0.4
+suspension_travel = 0.25
+suspension_stiffness = 30.0
+suspension_max_force = 8000.0
+damping_compression = 3.0
+damping_relaxation = 4.0
+
+[node name="Wheel" type="MeshInstance3D" parent="Player/WheelBackLeft"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_0murq")
+skeleton = NodePath("../..")
+
+[node name="WheelBackRight" type="VehicleWheel3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.25, -1)
+use_as_traction = true
+wheel_rest_length = 0.25
+wheel_friction_slip = 0.4
+suspension_travel = 0.25
+suspension_stiffness = 30.0
+suspension_max_force = 8000.0
+damping_compression = 3.0
+damping_relaxation = 4.0
+
+[node name="Wheel" type="MeshInstance3D" parent="Player/WheelBackRight"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_0murq")
+skeleton = NodePath("../..")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(-1, 1.77636e-15, -8.74228e-08, -2.6639e-08, 0.952444, 0.304715, 8.32653e-08, 0.304715, -0.952444, 0, 3.77106, -8.217)
+current = true
+fov = 37.8493
+
+[node name="CameraRig" type="Node3D" parent="."]
+transform = Transform3D(nan, nan, nan, nan, nan, nan, nan, nan, nan, 18.6513, 23.3076, 0)
+visible = false
+script = ExtResource("3_xqgaq")
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig"]
+transform = Transform3D(nan, nan, nan, 0, -4.37114e-08, 1, nan, nan, nan, 0, 0, 0)
+environment = SubResource("Environment_bn5ev")
+attributes = SubResource("CameraAttributesPractical_rigwa")
+script = ExtResource("1_hpef2")
+follow_speed = 6.0
+rotation_speed = 4.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CarGUI" type="VBoxContainer" parent="CanvasLayer" node_paths=PackedStringArray("car")]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("6_4ol57")
+car = NodePath("../../Player")
+
+[node name="SpeedBox" type="HBoxContainer" parent="CanvasLayer/CarGUI"]
+layout_mode = 2
+
+[node name="SpeedLabel" type="Label" parent="CanvasLayer/CarGUI/SpeedBox"]
+layout_mode = 2
+text = "Speed:"
+
+[node name="Speed" type="Label" parent="CanvasLayer/CarGUI/SpeedBox"]
+layout_mode = 2
+text = "0 KPH"
+
+[node name="RawSpeed" type="Label" parent="CanvasLayer/CarGUI"]
+visible = false
+layout_mode = 2
+text = "0 KPH"
+
+[node name="LapBox" type="HBoxContainer" parent="CanvasLayer/CarGUI"]
+layout_mode = 2
+
+[node name="LapLabel" type="Label" parent="CanvasLayer/CarGUI/LapBox"]
+layout_mode = 2
+text = "Laps:"
+
+[node name="LapCount" type="Label" parent="CanvasLayer/CarGUI/LapBox"]
+layout_mode = 2
+
+[node name="SuspensionBox" type="HBoxContainer" parent="CanvasLayer/CarGUI"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/CarGUI/SuspensionBox"]
+layout_mode = 2
+text = "Suspension"
+
+[node name="FLCompression" type="ProgressBar" parent="CanvasLayer/CarGUI/SuspensionBox"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+fill_mode = 3
+show_percentage = false
+
+[node name="FRCompression" type="ProgressBar" parent="CanvasLayer/CarGUI/SuspensionBox"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+fill_mode = 3
+show_percentage = false
+
+[node name="BLCompression" type="ProgressBar" parent="CanvasLayer/CarGUI/SuspensionBox"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+fill_mode = 3
+show_percentage = false
+
+[node name="BRCompression" type="ProgressBar" parent="CanvasLayer/CarGUI/SuspensionBox"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+fill_mode = 3
+show_percentage = false
+
+[node name="SuspensionTuningBox" type="VBoxContainer" parent="CanvasLayer/CarGUI"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+text = "Stiffness"
+
+[node name="Stiffness" type="HSlider" parent="CanvasLayer/CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+max_value = 60.0
+step = 0.25
+
+[node name="Label2" type="Label" parent="CanvasLayer/CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+text = "Max Force"
+
+[node name="MaxForce" type="HSlider" parent="CanvasLayer/CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+max_value = 8000.0
+
+[node name="Label3" type="Label" parent="CanvasLayer/CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+text = "DampingCompression"
+
+[node name="DampingCompression" type="HSlider" parent="CanvasLayer/CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+max_value = 4.0
+step = 0.1
+
+[node name="Label4" type="Label" parent="CanvasLayer/CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+text = "DampingRelaxation"
+
+[node name="DampingRelaxation" type="HSlider" parent="CanvasLayer/CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+max_value = 4.0
+step = 0.1
+
+[node name="Label5" type="Label" parent="CanvasLayer/CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+text = "RollInfluence"
+
+[node name="RollInfluence" type="HSlider" parent="CanvasLayer/CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+max_value = 4.0
+step = 0.1
+
+[node name="Label6" type="Label" parent="CanvasLayer/CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+text = "COG Y"
+
+[node name="COGY" type="HSlider" parent="CanvasLayer/CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+min_value = -0.3
+max_value = 0.3
+step = 0.01
+value = -0.3
+
+[node name="Label7" type="Label" parent="CanvasLayer/CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+text = "Front Friction Slip"
+
+[node name="FrictionSlipFront" type="HSlider" parent="CanvasLayer/CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+max_value = 8.0
+step = 0.1
+
+[node name="Label8" type="Label" parent="CanvasLayer/CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+text = "Rear Friction Slip"
+
+[node name="FrictionSlipRear" type="HSlider" parent="CanvasLayer/CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+max_value = 8.0
+step = 0.1

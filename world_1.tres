@@ -1,0 +1,10 @@
+[gd_resource type="BoxMesh" load_steps=2 format=3 uid="uid://bfqrqph2phwr0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sewkj"]
+albedo_color = Color(0.0666667, 0.133333, 1, 1)
+
+[resource]
+resource_local_to_scene = true
+resource_name = "Car"
+material = SubResource("StandardMaterial3D_sewkj")
+size = Vector3(1, 0.4, 2)

@@ -1,0 +1,208 @@
+[gd_scene load_steps=21 format=3 uid="uid://crudr1e5ueyq5"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_6b45s"]
+[ext_resource type="Script" path="res://Camera.gd" id="1_hpef2"]
+[ext_resource type="Texture2D" uid="uid://chlttq3e4mfwr" path="res://ground-simple-sand-and-dirt-smooth-farm-3.jpg" id="1_k45tj"]
+[ext_resource type="BoxMesh" uid="uid://bfqrqph2phwr0" path="res://world_1.tres" id="3_xbw4t"]
+[ext_resource type="Script" path="res://CameraRig.gd" id="3_xqgaq"]
+[ext_resource type="Script" path="res://player_gui.gd" id="6_4ol57"]
+
+[sub_resource type="Sky" id="Sky_x3qja"]
+
+[sub_resource type="Environment" id="Environment_x0m8e"]
+sky = SubResource("Sky_x3qja")
+ambient_light_color = Color(1, 1, 1, 1)
+sdfgi_enabled = true
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_w0h76"]
+auto_exposure_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0iehp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ij2sk"]
+albedo_color = Color(0, 0.745098, 0.2, 1)
+albedo_texture = ExtResource("1_k45tj")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_td65y"]
+size = Vector3(50, 0.1, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0c8po"]
+size = Vector3(1, 0.9, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_18o44"]
+albedo_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0murq"]
+material = SubResource("StandardMaterial3D_18o44")
+height = 0.1
+radial_segments = 8
+rings = 2
+
+[sub_resource type="Environment" id="Environment_bn5ev"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_rigwa"]
+exposure_multiplier = 2.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a5h2i"]
+size = Vector3(100, 3, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ch1qa"]
+albedo_color = Color(0.560784, 0.560784, 0.560784, 1)
+metallic = 0.76
+metallic_specular = 0.19
+roughness = 0.22
+
+[sub_resource type="BoxMesh" id="BoxMesh_n6jia"]
+material = SubResource("StandardMaterial3D_ch1qa")
+
+[node name="World" type="Node3D"]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 10, 10)
+light_energy = 100.0
+light_indirect_energy = 16.0
+light_size = 100.0
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_x0m8e")
+camera_attributes = SubResource("CameraAttributesPractical_w0h76")
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(50, 0, 0, 0, 0.1, 0, 0, 0, 50, 0, 0, 0)
+mesh = SubResource("PlaneMesh_0iehp")
+surface_material_override/0 = SubResource("StandardMaterial3D_ij2sk")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_td65y")
+
+[node name="Car" type="VehicleBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00662231, 6, 0.0395637)
+mass = 500.0
+script = ExtResource("1_6b45s")
+steer_angle = 0.25
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Car"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.226473, 0)
+shape = SubResource("BoxShape3D_0c8po")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Car"]
+mesh = ExtResource("3_xbw4t")
+skeleton = NodePath("")
+
+[node name="WheelFrontLeft" type="VehicleWheel3D" parent="Car"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.25, 1)
+use_as_steering = true
+wheel_rest_length = 0.25
+wheel_friction_slip = 4.0
+suspension_travel = 0.25
+suspension_max_force = 600.0
+damping_compression = 0.3
+damping_relaxation = 0.5
+
+[node name="Wheel" type="MeshInstance3D" parent="Car/WheelFrontLeft"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_0murq")
+skeleton = NodePath("../..")
+
+[node name="WheelFrontRight" type="VehicleWheel3D" parent="Car"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.25, 1)
+use_as_steering = true
+wheel_rest_length = 0.25
+wheel_friction_slip = 4.0
+suspension_travel = 0.25
+suspension_max_force = 600.0
+damping_compression = 0.3
+damping_relaxation = 0.5
+
+[node name="Wheel" type="MeshInstance3D" parent="Car/WheelFrontRight"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_0murq")
+skeleton = NodePath("../..")
+
+[node name="WheelBackLeft" type="VehicleWheel3D" parent="Car"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.25, -1)
+use_as_traction = true
+wheel_rest_length = 0.25
+wheel_friction_slip = 4.0
+suspension_travel = 0.25
+suspension_max_force = 600.0
+damping_compression = 0.3
+damping_relaxation = 0.5
+
+[node name="Wheel" type="MeshInstance3D" parent="Car/WheelBackLeft"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_0murq")
+skeleton = NodePath("../..")
+
+[node name="WheelBackRight" type="VehicleWheel3D" parent="Car"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.25, -1)
+use_as_traction = true
+wheel_rest_length = 0.25
+wheel_friction_slip = 4.0
+suspension_travel = 0.25
+suspension_max_force = 600.0
+damping_compression = 0.3
+damping_relaxation = 0.5
+
+[node name="Wheel" type="MeshInstance3D" parent="Car/WheelBackRight"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_0murq")
+skeleton = NodePath("../..")
+
+[node name="CameraRig" type="Node3D" parent="." node_paths=PackedStringArray("target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 11, -5)
+script = ExtResource("3_xqgaq")
+target = NodePath("../Car")
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig" node_paths=PackedStringArray("target")]
+transform = Transform3D(-0.710354, 0.405471, -0.575317, 0, 0.817393, 0.57608, 0.703844, 0.409221, -0.580639, 0, 0, 0)
+environment = SubResource("Environment_bn5ev")
+attributes = SubResource("CameraAttributesPractical_rigwa")
+current = true
+script = ExtResource("1_hpef2")
+target = NodePath("../../Car")
+follow_speed = 6.0
+rotation_speed = 4.0
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.51761, 50.034)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_a5h2i")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(100, 0, 0, 0, 3, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_n6jia")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CarGUI" type="VBoxContainer" parent="CanvasLayer" node_paths=PackedStringArray("car")]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("6_4ol57")
+car = NodePath("../../Car")
+
+[node name="SpeedBox" type="HBoxContainer" parent="CanvasLayer/CarGUI"]
+layout_mode = 2
+
+[node name="SpeedLabel" type="Label" parent="CanvasLayer/CarGUI/SpeedBox"]
+layout_mode = 2
+text = "Speed:"
+
+[node name="Speed" type="Label" parent="CanvasLayer/CarGUI/SpeedBox"]
+layout_mode = 2
+text = "0 KPH"
+
+[node name="SuspensionBox" type="HBoxContainer" parent="CanvasLayer/CarGUI"]
+layout_mode = 2
+
+[node name="FLTextureBar" type="TextureProgressBar" parent="CanvasLayer/CarGUI/SuspensionBox"]
+layout_mode = 2
+fill_mode = 3
+
+[node name="FLCompression" type="Label" parent="CanvasLayer/CarGUI/SuspensionBox"]
+layout_mode = 2

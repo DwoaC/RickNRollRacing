@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2b7mhsnkyyfl"]
+
+[ext_resource type="PackedScene" uid="uid://lxtjnwjk6q8t" path="res://track_cross_section.tscn" id="1_0yi0i"]
+[ext_resource type="Script" path="res://tracks/track_base.gd" id="1_osbvj"]
+
+[sub_resource type="Curve3D" id="Curve3D_ubf12"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -75, 0, 0, 0, 0, 0, 0, 0, 0, -65.154, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 22.5, 0.25, 0, 0, 0, 0, 0, 0, 0, 25.946, 1.5, 0, 0, 0, 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 0, 0, 0, 64.346, 0, 0),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 7
+
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("main_path")]
+script = ExtResource("1_osbvj")
+main_path = NodePath("Track")
+spawn_index = 1
+
+[node name="Track" type="Path3D" parent="."]
+curve = SubResource("Curve3D_ubf12")
+
+[node name="TrackCrossSection" parent="Track" instance=ExtResource("1_0yi0i")]
+path_simplify_angle = 3.0
+path_joined = false

@@ -19,10 +19,12 @@ layout_mode = 2
 text = "Speed:"
 
 [node name="Speed" type="Label" parent="CarGUI/SpeedBox"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "0 KPH"
 
 [node name="RawSpeed" type="Label" parent="CarGUI"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
 text = "0 KPH"
@@ -35,6 +37,7 @@ layout_mode = 2
 text = "Laps:"
 
 [node name="LapCount" type="Label" parent="CarGUI/LapBox"]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="SuspensionBox" type="HBoxContainer" parent="CarGUI"]

@@ -3,19 +3,12 @@ class_name CarGUI
 
 @export var car: Car
 
-var max_laps:
-	set(value):
-		if is_inf(value):
-			value = "∞"
-		max_laps = value
-		$LapBox/LapCount.text = str(car.current_lap) + " of "  + str(max_laps)
+
 
 func _ready():
 	# Assuming your car is a child of the level
 	car = get_parent().car
 	if car:
-		car.speed_updated.connect(_on_player_speed_updated)
-		car.lap_completed.connect(_on_player_lap_completed)
 		
 		car.suspension_updated.connect(_on_player_suspension_updated)
 		$SuspensionTuningBox/Stiffness.value = car.wheels[0].suspension_stiffness
@@ -42,18 +35,8 @@ func _ready():
 		$SuspensionTuningBox/FrictionSlipRear.value = car.wheels[0].wheel_friction_slip
 		$SuspensionTuningBox/FrictionSlipRear.value_changed.connect(_on_car_suspension_friction_slip_rear_updated)
 
-func _on_player_speed_updated(speed: float) -> void:
-	$SpeedBox/Speed.text = str(round(speed * 3.6)) + " KMH"
-	$RawSpeed.text = str(speed)
-	
-func _on_player_lap_completed(car: Car) -> void:
-	$LapBox/LapCount.text = str(car.current_lap) + " of "  + str(max_laps)
-	
-func on_track_changed(track: Track) -> void:
-	$LapBox/LapCount.text = str(car.current_lap) + " of "  + str(max_laps)
-	
-func on_max_laps_changed(new_max_laps) -> void:
-	max_laps = new_max_laps
+
+
 
 func _on_player_suspension_updated(values: Array[float]) -> void:
 	$SuspensionBox.get_node("FLCompression").value = values[0]

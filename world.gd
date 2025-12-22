@@ -2,6 +2,7 @@ extends Node3D
 
 @export var track_path: String = "res://tracks/track_1.tscn"
 @export var cars: Array[Car]
+@export var guis: Array[CarGUICanvas]
 
 var CAR_OFFSET_H = 2.0
 var CAR_OFFSET_Z = 5.0
@@ -19,9 +20,13 @@ signal max_laps_changed(max_laps)
 func _ready() -> void:
 	for car in cars:
 		track_changed.connect(car.on_track_changed)
-	
-	track_changed.connect($CanvasLayer/CarGUI.on_track_changed)
-	max_laps_changed.connect($CanvasLayer/CarGUI.on_max_laps_changed)
+		for node in car.get_children():
+			if node is CarGUICanvas:				
+				track_changed.connect(node.on_track_changed)
+				max_laps_changed.connect(node.on_max_laps_changed)
+		
+	#track_changed.connect($CanvasLayer/CarGUI.on_track_changed)
+	#max_laps_changed.connect($CanvasLayer/CarGUI.on_max_laps_changed)
 	
 	load_level()
 	var index = 0

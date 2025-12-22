@@ -8,7 +8,7 @@
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("cars")]
 script = ExtResource("1_hm5vt")
-track_path = "res://tracks/track_2.tscn"
+track_path = "res://tracks/track_1.tscn"
 cars = [NodePath("Player")]
 
 [node name="WorldEnvironment" parent="." instance=ExtResource("2_w600y")]

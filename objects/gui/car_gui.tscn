@@ -148,3 +148,9 @@ text = "Rear Friction Slip"
 layout_mode = 2
 max_value = 8.0
 step = 0.1
+
+[node name="ResetMessage" type="Label" parent="CarGUI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Press 'Fire' to reset"

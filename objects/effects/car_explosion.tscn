@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://d4jbohmbtbo51"]
+[gd_scene load_steps=9 format=3 uid="uid://d4jbohmbtbo51"]
 
 [ext_resource type="Script" path="res://objects/effects/car_explosion.gd" id="1_xsnew"]
+[ext_resource type="AudioStream" uid="uid://dcxk1uhj5ehas" path="res://sound/explosions/DESTRCrsh_Designed Car Explosion With Metal Breaking And Glass Shattering  06_DDUMAIS_NONE.wav" id="2_qjhhv"]
 
 [sub_resource type="Gradient" id="Gradient_jr0tc"]
 colors = PackedColorArray(0.562567, 0.534106, 0.00862368, 1, 0.885317, 0.105873, 0, 1)
@@ -34,3 +35,7 @@ explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_t47m4")
 draw_pass_1 = SubResource("SphereMesh_wntkg")
 script = ExtResource("1_xsnew")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_qjhhv")
+autoplay = true

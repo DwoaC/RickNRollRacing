@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c7ggt087w06mw"
+path="res://.godot/imported/SCIWeap_Shot Pulse YR 05_RSCPC_SFEW.wav-ed2bfe4cc411f6fc86825941b8faa358.sample"
+
+[deps]
+
+source_file="res://sound/guns/SCIWeap_Shot Pulse YR 05_RSCPC_SFEW.wav"
+dest_files=["res://.godot/imported/SCIWeap_Shot Pulse YR 05_RSCPC_SFEW.wav-ed2bfe4cc411f6fc86825941b8faa358.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

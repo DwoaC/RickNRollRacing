@@ -35,9 +35,6 @@ func _ready():
 		$SuspensionTuningBox/FrictionSlipRear.value = car.wheels[0].wheel_friction_slip
 		$SuspensionTuningBox/FrictionSlipRear.value_changed.connect(_on_car_suspension_friction_slip_rear_updated)
 
-
-
-
 func _on_player_suspension_updated(values: Array[float]) -> void:
 	$SuspensionBox.get_node("FLCompression").value = values[0]
 	$SuspensionBox.get_node("FRCompression").value = values[1]

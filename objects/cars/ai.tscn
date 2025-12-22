@@ -40,6 +40,7 @@ dis_scale = 1.0
 [node name="Left" type="ShapeCast3D" parent="Whiskers" index="0"]
 shape = SubResource("BoxShape3D_yhv5k")
 target_position = Vector3(0.5, 0, 1.25)
+collision_mask = 2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Whiskers/Left" index="0"]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
@@ -48,6 +49,7 @@ mesh = SubResource("SphereMesh_bhdgk")
 [node name="Forward" type="ShapeCast3D" parent="Whiskers" index="1"]
 shape = SubResource("BoxShape3D_26nqt")
 target_position = Vector3(0, 0, 1.25)
+collision_mask = 2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Whiskers/Forward" index="0"]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
@@ -56,6 +58,7 @@ mesh = SubResource("SphereMesh_bhdgk")
 [node name="Right" type="ShapeCast3D" parent="Whiskers" index="2"]
 shape = SubResource("BoxShape3D_k403e")
 target_position = Vector3(-0.5, 0, 1.25)
+collision_mask = 2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Whiskers/Right" index="0"]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)

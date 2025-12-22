@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dvo658vkeng2u"]
 
-[ext_resource type="PackedScene" uid="uid://lxtjnwjk6q8t" path="res://track_cross_section.tscn" id="1_4qifk"]
+[ext_resource type="PackedScene" uid="uid://lxtjnwjk6q8t" path="res://tracks/track_cross_section.tscn" id="1_4qifk"]
 [ext_resource type="Script" path="res://tracks/track_base.gd" id="1_oq2kh"]
 
 [sub_resource type="Curve3D" id="Curve3D_3eiil"]

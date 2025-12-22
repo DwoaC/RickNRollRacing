@@ -1,10 +1,12 @@
 extends VehicleBody3D
 class_name Car
 
+@export_group("Engine")
 @export var engine_force_value: float = 3000.0
 @export var brake_force_value: float = 6000.0
 @export var steer_angle: float = 0.5   # radians
 @export var respawn_delay: float = 1.5
+@export var max_speed: float = 75.0 / 3.6
 
 var live_engine_force = 0.0
 var is_dead = false
@@ -16,21 +18,55 @@ var is_dead = false
 				if child is VehicleWheel3D:
 					wheels.append(child)
 		return wheels
+		
+var any_wheel_in_contact: bool:
+	get:
+		for wheel in wheels:
+			if wheel.is_in_contact():
+				return true
+		return false
 
 var track: Track
 
 var cross_two_thirds: bool = false
 var cross_one_thrid: bool = false
 var current_lap: int
+var is_flipped: bool = false
 
+@export_group("Bullets")
 @export var bullet_scene: PackedScene = preload("res://objects/bullets/bullet.tscn")
 @onready var muzzle = $Muzzle
 @export var explosion_scene: PackedScene = preload("res://objects/effects/car_explosion.tscn")
 @onready var fire_timer: Timer = $FireTimeout
 
+@export_group("Audio")
+@onready var engine_audio_idle = %EngineIdle
+@onready var engine_audio_high = %EngineHigh
+@onready var fire_sound = %FireSound
+@onready var crash_sound = %CrashSound
+@onready var tire_squeal_sound = %TireSquealSound
+@onready var break_sound = %TireSquealSound
+
+@export var min_pitch: float = 0.6  # Deep idle sound
+@export var max_pitch: float = 2.5  # High revving sound
+@export var max_speed_for_audio: float = 120.0 / 3.6
+@export var crash_threshold: float = 5.0 # Minimum speed impact to trigger sound
+@export var squeal_threshold: float = 2.0  # How much slip triggers sound
+@export var squeal_max_vol: float = 0.0    # Max volume in DB
+@export var brake_squeal_threshold: float = 2.0 # Speed above which brakes squeal
+@export var brake_sensitivity: float = 0.5     # How hard you must press to hear it
+
+var flip_timer: float = 0.0
+@export var flip_threshold: float = 2.0 # Seconds to wait before resetting
+@export var max_upright_angle: float = 0.5
+
+var last_velocity: Vector3 = Vector3.ZERO
+
 signal speed_updated(new_speed: float)
 signal suspension_updated(values: Array[float])
 signal lap_completed(car: Car)
+signal car_flipped(car: Car)
+signal car_reset(car: Car)
 
 @onready var initial_y = $WheelFrontLeft.position.y
 
@@ -45,7 +81,109 @@ func _physics_process(delta):
 	stabilize_muzzle()	
 	process_suspension(delta)
 	process_lap(delta)
+	process_audio(delta)
 	emit_updates()	
+	detect_crash(delta)
+	process_flipped(delta)
+	if current_speed > max_speed:
+		engine_force = 0
+	
+func detect_crash(delta):
+	var current_velocity = linear_velocity
+	
+	var impulse = (last_velocity - current_velocity).length()
+	
+	if impulse > crash_threshold:
+		play_crash_sound(impulse)
+		
+	last_velocity = current_velocity
+	
+func play_crash_sound(force):
+	# Don't play if it's already playing (prevents "machine gun" sound)
+	if not crash_sound.playing:
+		# Randomize pitch slightly so every crash sounds unique
+		crash_sound.pitch_scale = randf_range(0.8, 1.2)
+		
+		# Make louder impacts sound louder
+		var volume = remap(force, crash_threshold, 30.0, -10.0, 5.0)
+		crash_sound.volume_db = clamp(volume, -15.0, 5.0)
+		
+		crash_sound.play()
+	
+func process_audio(delta):
+	process_engine_audio(delta)
+	process_tire_squeal(delta)
+	process_break_audio(delta)
+
+func process_engine_audio(delta):
+	var target_pitch = remap(current_speed, 0, max_speed_for_audio, min_pitch, max_pitch)
+	
+	engine_audio_idle.pitch_scale = clamp(target_pitch, min_pitch, max_pitch)
+	engine_audio_idle.volume_db = remap(current_speed, 0, max_speed_for_audio * 0.66, -10, 0)
+	
+	engine_audio_high.pitch_scale = clamp(target_pitch, min_pitch, max_pitch)
+	engine_audio_high.volume_db = remap(current_speed, max_speed_for_audio * 0.33, max_speed_for_audio, -10, 0)
+	
+	var mix_ratio = clamp(current_speed / max_speed_for_audio, 0.0, 1.0)
+	
+	engine_audio_idle.volume_db = linear_to_db(1.0 - mix_ratio)
+	engine_audio_high.volume_db = linear_to_db(mix_ratio)
+	
+func process_break_audio(delta):
+	var current_speed = linear_velocity.length()
+	
+	# We check if the player is pressing the brake (usually Input.get_axis or similar)
+	# In VehicleBody3D, 'brake' is a float property
+	var is_braking = brake > brake_sensitivity
+	
+	if is_braking and current_speed > brake_squeal_threshold:
+		if not break_sound.playing:
+			break_sound.play()
+		
+		# Volume increases with speed and brake pressure
+		var pressure_factor = clamp(brake / 10.0, 0.0, 1.0) # Normalizing brake force
+		var target_vol = remap(current_speed * pressure_factor, 0, 30, -25.0, 0.0)
+		
+		break_sound.volume_db = lerp(break_sound.volume_db, target_vol, 0.1)
+		
+		# Brakes often "shriek" higher as they get hotter/faster
+		break_sound.pitch_scale = lerp(break_sound.pitch_scale, 1.2, 0.05)
+	else:
+		# Fade out smoothly
+		break_sound.volume_db = lerp(break_sound.volume_db, -40.0, 0.2)
+		if break_sound.volume_db < -39:
+			break_sound.stop()
+	
+func process_tire_squeal(delta):
+	if not any_wheel_in_contact:
+		tire_squeal_sound.stop()
+		return
+		
+	var side_velocity = linear_velocity.dot(global_transform.basis.x)
+	var abs_side_slip = abs(side_velocity)
+	
+	var engine_slip = 0.0
+	if linear_velocity.length() < 5.0 and engine_force > 500:
+		engine_slip = 5.0 
+
+	var total_slip = abs_side_slip + engine_slip
+
+	# 3. Audio Control
+	if total_slip > squeal_threshold:
+		if not tire_squeal_sound.playing:
+			tire_squeal_sound.play()
+		
+		# Fade volume in based on slip intensity
+		var target_vol = remap(total_slip, squeal_threshold, 15.0, -20.0, squeal_max_vol)
+		tire_squeal_sound.volume_db = lerp(tire_squeal_sound.volume_db, target_vol, 0.2)
+		
+		# Higher pitch for faster slides
+		tire_squeal_sound.pitch_scale = remap(total_slip, squeal_threshold, 20.0, 0.8, 1.2)
+	else:
+		# Fade out volume instead of stopping abruptly
+		tire_squeal_sound.volume_db = lerp(tire_squeal_sound.volume_db, -40.0, 0.1)
+		if tire_squeal_sound.volume_db < -39:
+			tire_squeal_sound.stop()
 	
 func emit_updates():
 	speed_updated.emit(current_speed)
@@ -126,25 +264,29 @@ func take_damage(damage, source):
 	is_dead = true
 	visible = false
 	process_mode = PROCESS_MODE_DISABLED
+	
 	spawn_explosion_visuals()
 	await get_tree().create_timer(respawn_delay).timeout
 	respawn()
 
 func reset_car_to_track():
+	if not track:
+		return
+		
 	var curve = track.main_path.curve
 	var current_offset = curve.get_closest_offset(track.main_path.to_local(global_position))
 	
 	var respawn_pos = track.main_path.to_global(curve.sample_baked(current_offset - 5.0))
-	
 	var look_at_pos = track.main_path.to_global(curve.sample_baked(current_offset + 5.0))
-	
-	linear_velocity = Vector3.ZERO
-	angular_velocity = Vector3.ZERO
 	
 	global_position = respawn_pos
 	look_at(look_at_pos, Vector3.UP, true)
 	
 	global_position.y += 1.0
+	
+	linear_velocity = Vector3.ZERO
+	angular_velocity = Vector3.ZERO
+	car_reset.emit(self)
 
 func respawn():
 	is_dead = false	
@@ -162,7 +304,21 @@ func spawn_explosion_visuals():
 	exp.global_transform = global_transform
 
 func stabilize_muzzle():
-	var current_rotation = muzzle.global_rotation
-	muzzle.global_rotation.x = 0
-	muzzle.global_rotation.z = 0
 	muzzle.global_position.y = global_position.y + 0.5
+	muzzle.global_position.x = global_position.x
+	muzzle.global_position.z = global_position.z
+	
+func process_flipped(delta):
+	var up_dot = global_transform.basis.y.dot(Vector3.UP)
+	if up_dot < max_upright_angle and linear_velocity.length() < 1.0:
+		flip_timer += delta
+		if flip_timer >= flip_threshold:
+			if not is_flipped:
+				car_flipped.emit(self)
+			is_flipped = true
+			if Input.is_action_just_pressed("fire"):
+				reset_car_to_track()
+	else:
+		#print("car is not flipped "  + str(abs(up_dot)))	
+		flip_timer = 0.0 # Reset timer if we manage to roll back over
+		is_flipped = false

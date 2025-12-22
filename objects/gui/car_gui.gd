@@ -3,6 +3,7 @@ extends CanvasLayer
 
 @export var car: Car
 @onready var gui: CarGUI = $CarGUI
+@onready var reset_message: Label = %ResetMessage
 
 var max_laps:
 	set(value):
@@ -29,3 +30,8 @@ func _on_player_speed_updated(speed: float) -> void:
 	%Speed.text = str(round(speed * 3.6)) + " KMH"
 	%RawSpeed.text = str(speed)
 	
+func on_car_flipped(car: Car):
+	reset_message.show()
+	
+func on_car_reset(car: Car):
+	reset_message.hide()

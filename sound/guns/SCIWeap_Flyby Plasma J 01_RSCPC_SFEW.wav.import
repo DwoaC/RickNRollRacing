@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cv0566w2n8jhi"
+path="res://.godot/imported/SCIWeap_Flyby Plasma J 01_RSCPC_SFEW.wav-17bb61861a194e4ea9b8f79ec585bef2.sample"
+
+[deps]
+
+source_file="res://sound/guns/SCIWeap_Flyby Plasma J 01_RSCPC_SFEW.wav"
+dest_files=["res://.godot/imported/SCIWeap_Flyby Plasma J 01_RSCPC_SFEW.wav-17bb61861a194e4ea9b8f79ec585bef2.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

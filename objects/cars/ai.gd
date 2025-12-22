@@ -4,8 +4,6 @@ extends Car
 @export var min_look_ahead: float = 5.0
 
 @export var stuck_speed_threshold: float = 0.5  
-@export var stuck_time_limit: float = 3.0      
-var stuck_timer: float = 0.0
 
 var look_ahead_distance:
 	get:
@@ -16,7 +14,6 @@ var speed_multiplier = 2
 func process_controls(delta: float) -> void:
 	if not track: 
 		return
-	check_if_stuck(delta)
 	process_steering(delta)
 	process_engine(delta)
 	process_avoidence(delta)
@@ -90,16 +87,16 @@ func process_avoidence(delta) -> void:
 		if collider is Car and collider != self:
 			steering -= steer_angle
 
-func check_if_stuck(delta: float) -> void:
+func process_flipped(delta: float) -> void:
 	# Get current speed (meters per second)
 	var current_speed = linear_velocity.length()
 	
 	# If moving slower than the threshold...
 	if current_speed < stuck_speed_threshold:
-		stuck_timer += delta
-		if stuck_timer >= stuck_time_limit:
-			stuck_timer = 0.0			
+		flip_timer += delta
+		if flip_timer >= flip_threshold:
+			flip_timer = 0.0			
 			reset_car_to_track()
 	else:
 		# Reset the timer if we are moving again
-		stuck_timer = 0.0
+		flip_timer = 0.0

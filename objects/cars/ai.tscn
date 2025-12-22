@@ -28,7 +28,6 @@ size = Vector3(0.5, 0.1, 10)
 script = ExtResource("2_vkg7a")
 min_look_ahead = 5.0
 stuck_speed_threshold = 0.5
-stuck_time_limit = 3.0
 
 [node name="MeshInstance3D" parent="." index="1"]
 mesh = SubResource("BoxMesh_x35v6")

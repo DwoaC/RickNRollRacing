@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://7cbhbnwj6ihi"]
+[gd_scene load_steps=11 format=3 uid="uid://7cbhbnwj6ihi"]
 
 [ext_resource type="Script" path="res://objects/cars/car.gd" id="1_k4uvk"]
 [ext_resource type="BoxMesh" uid="uid://bfqrqph2phwr0" path="res://world_1.tres" id="2_jf0qi"]
@@ -6,6 +6,10 @@
 [ext_resource type="AudioStream" uid="uid://df0eapmcrtmot" path="res://sound/engines/loop_5.wav" id="4_wqf37"]
 [ext_resource type="AudioStream" uid="uid://caggpdhpgls4x" path="res://sound/impact/UI_Noisy_Impact_09.wav" id="5_v64pd"]
 [ext_resource type="AudioStream" uid="uid://ba525dj0q68x4" path="res://sound/tires/tires_squal_loop.wav" id="6_8nqro"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dev5v"]
+friction = 0.26
+bounce = 0.63
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0c8po"]
 size = Vector3(1, 0.5, 3)
@@ -23,6 +27,7 @@ rings = 2
 collision_layer = 2
 collision_mask = 3
 mass = 500.0
+physics_material_override = SubResource("PhysicsMaterial_dev5v")
 gravity_scale = 2.0
 center_of_mass_mode = 1
 center_of_mass = Vector3(0, -0.07, 0.1)

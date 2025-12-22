@@ -76,7 +76,9 @@ func place_car(car, position):
 		
 		var right_direction = car.global_transform.basis.x
 		var back_direction = -car.global_transform.basis.z
+		
+		car.global_position -= right_direction * CAR_OFFSET_H	
 
-		car.global_position += right_direction * CAR_OFFSET_H * h_offset		
+		car.global_position += right_direction * CAR_OFFSET_H * h_offset * 2		
 		car.global_position += back_direction * CAR_OFFSET_Z * z_offset
 

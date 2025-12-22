@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://crudr1e5ueyq5"]
 
-[ext_resource type="Script" path="res://worlds/world.gd" id="1_hm5vt"]
+[ext_resource type="Script" uid="uid://dikbr8peyej5t" path="res://worlds/world.gd" id="1_hm5vt"]
 [ext_resource type="PackedScene" uid="uid://c0gtmb7t2u3hd" path="res://objects/environments/world_environment.tscn" id="2_w600y"]
 [ext_resource type="PackedScene" uid="uid://ekj5r33q5fo7" path="res://objects/gui/car_gui.tscn" id="3_0opm1"]
 [ext_resource type="PackedScene" uid="uid://lesp7rhwlcij" path="res://objects/cars/player.tscn" id="4_ryn78"]
@@ -8,16 +8,19 @@
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("cars")]
 script = ExtResource("1_hm5vt")
-track_path = "res://tracks/track_1.tscn"
+track_path = "res://tracks/3.tscn"
 cars = [NodePath("Player")]
+n_ai = 3
 
 [node name="WorldEnvironment" parent="." instance=ExtResource("2_w600y")]
 
 [node name="Player" parent="." instance=ExtResource("4_ryn78")]
-max_contacts_reported = 0
 contact_monitor = false
+max_contacts_reported = 0
 
 [node name="CameraPivot" parent="Player" instance=ExtResource("5_d3bu8")]
+min_fov = 85.0
+max_fov = 110.0
 
 [node name="CanvasLayer" parent="Player" node_paths=PackedStringArray("car") instance=ExtResource("3_0opm1")]
 car = NodePath("..")

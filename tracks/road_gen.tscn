@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://px3d660j35le"]
+
+[ext_resource type="Script" uid="uid://donh5qugbob27" path="res://addons/road-generator/nodes/road_container.gd" id="1_uqbvu"]
+[ext_resource type="Material" uid="uid://dpashsuk5lr4x" path="res://addons/road-generator/resources/road_texture.material" id="2_xrddx"]
+[ext_resource type="Script" uid="uid://daq3qyxyg3blg" path="res://addons/road-generator/nodes/road_point.gd" id="3_uqbvu"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_uqbvu"]
+
+[node name="Track" type="Node3D"]
+script = ExtResource("1_uqbvu")
+material_resource = ExtResource("2_xrddx")
+use_lowpoly_preview = true
+physics_material = SubResource("PhysicsMaterial_uqbvu")
+create_edge_curves = true
+edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_target_dirs = Array[int]([-1, -1])
+edge_rp_locals = Array[NodePath]([NodePath("RoadPoint"), NodePath("RoadPoint")])
+edge_rp_local_dirs = Array[int]([0, 1])
+metadata/_custom_type_script = "uid://donh5qugbob27"
+
+[node name="RoadPoint" type="Node3D" parent="."]
+script = ExtResource("3_uqbvu")
+traffic_dir = Array[int]([2, 2, 1, 1])
+lanes = Array[int]([2, 4, 4, 2])
+metadata/_custom_type_script = "uid://daq3qyxyg3blg"
+
+[node name="RoadPoint2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.8402166)
+script = ExtResource("3_uqbvu")
+traffic_dir = Array[int]([2, 2, 2, 2, 2, 1, 1, 1, 1])
+lanes = Array[int]([2, 4, 4, 2])
+metadata/_custom_type_script = "uid://daq3qyxyg3blg"

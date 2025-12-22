@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://b62583glu5fjq"]
+[gd_scene load_steps=4 format=3 uid="uid://k51ih4a2wk0o"]
 
-[ext_resource type="PackedScene" uid="uid://lxtjnwjk6q8t" path="res://tracks/track_cross_section.tscn" id="1_0yi0i"]
-[ext_resource type="Script" path="res://tracks/track_base.gd" id="1_osbvj"]
+[ext_resource type="Script" uid="uid://deve5cnn2ali4" path="res://tracks/track_base.gd" id="1_w1u1i"]
+[ext_resource type="PackedScene" uid="uid://lxtjnwjk6q8t" path="res://tracks/track_cross_section.tscn" id="2_o4yu2"]
 
 [sub_resource type="Curve3D" id="Curve3D_ubf12"]
 _data = {
@@ -11,13 +11,14 @@ _data = {
 point_count = 7
 
 [node name="Node3D" type="Node3D" node_paths=PackedStringArray("main_path")]
-script = ExtResource("1_osbvj")
+script = ExtResource("1_w1u1i")
 main_path = NodePath("Track")
 spawn_index = 1
 
 [node name="Track" type="Path3D" parent="."]
 curve = SubResource("Curve3D_ubf12")
 
-[node name="TrackCrossSection" parent="Track" instance=ExtResource("1_0yi0i")]
+[node name="TrackCrossSection" parent="Track" instance=ExtResource("2_o4yu2")]
 path_simplify_angle = 3.0
+path_rotation_accurate = false
 path_joined = false

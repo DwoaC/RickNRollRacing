@@ -29,7 +29,7 @@ func place_cars():
 	for car in cars:
 		place_car(car, index)
 		index += 1
-		
+
 func add_ai():
 	for i in range(n_ai):
 		var car = AI_CAR_SCENE.instantiate()
@@ -81,4 +81,3 @@ func place_car(car, position):
 
 		car.global_position += right_direction * CAR_OFFSET_H * h_offset * 2		
 		car.global_position += back_direction * CAR_OFFSET_Z * z_offset
-

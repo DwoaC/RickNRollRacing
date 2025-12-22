@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://bfkasrbu3llwy"]
+
+[ext_resource type="Script" path="res://world.gd" id="1_uqvrd"]
+[ext_resource type="PackedScene" uid="uid://c0gtmb7t2u3hd" path="res://objects/environments/world_environment.tscn" id="2_xwmoq"]
+[ext_resource type="PackedScene" uid="uid://ekj5r33q5fo7" path="res://objects/gui/car_gui.tscn" id="3_sfkyo"]
+[ext_resource type="PackedScene" uid="uid://lesp7rhwlcij" path="res://objects/cars/player.tscn" id="4_j84vc"]
+[ext_resource type="PackedScene" uid="uid://g5kwvc0ak78m" path="res://objects/cars/ai.tscn" id="5_odjhe"]
+[ext_resource type="PackedScene" uid="uid://c4jtxt7avcl0m" path="res://objects/camera/spring_mounted_camera.tscn" id="6_8iqxx"]
+
+[node name="World" type="Node3D" node_paths=PackedStringArray("cars")]
+script = ExtResource("1_uqvrd")
+track_path = "res://tracks/track_2.tscn"
+cars = [NodePath("Player"), NodePath("Player2")]
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("2_xwmoq")]
+
+[node name="CanvasLayer" parent="." node_paths=PackedStringArray("car") instance=ExtResource("3_sfkyo")]
+car = NodePath("../Player")
+
+[node name="Player" parent="." instance=ExtResource("4_j84vc")]
+collision_layer = 1
+collision_mask = 1
+
+[node name="CameraPivot" parent="Player" instance=ExtResource("6_8iqxx")]
+
+[node name="AI" parent="." instance=ExtResource("5_odjhe")]
+process_mode = 4
+visible = false
+collision_layer = 1
+collision_mask = 1
+
+[node name="AI2" parent="." instance=ExtResource("5_odjhe")]
+process_mode = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0132446, 12, 0.0791274)
+visible = false
+collision_layer = 1
+collision_mask = 1
+
+[node name="AI3" parent="." instance=ExtResource("5_odjhe")]
+process_mode = 4
+visible = false
+collision_layer = 1
+collision_mask = 1
+
+[node name="AI4" parent="." instance=ExtResource("5_odjhe")]
+process_mode = 4
+visible = false
+collision_layer = 1
+collision_mask = 1
+
+[node name="AI5" parent="." instance=ExtResource("5_odjhe")]
+process_mode = 4
+visible = false
+collision_layer = 1
+collision_mask = 1
+
+[node name="Player2" parent="." instance=ExtResource("4_j84vc")]
+collision_layer = 1
+collision_mask = 1
+input_turn_left = "turn_left_p2"
+input_turn_right = "turn_right_p2"
+input_accelerate = "accelerate_p2"
+input_brake = "brake_p2"
+input_fire = "fire_p2"

@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4jtxt7avcl0m"]
+
+[ext_resource type="Script" path="res://objects/camera/spring_mounted_camera.gd" id="1_kmdlg"]
+
+[node name="CameraPivot" type="Node3D"]
+top_level = true
+script = ExtResource("1_kmdlg")
+
+[node name="CameraSpringArm3D" type="SpringArm3D" parent="."]
+transform = Transform3D(-1, 8.74228e-08, 0, 7.46992e-08, 0.854459, 0.519519, 4.54178e-08, 0.519519, -0.854459, 0, 0, 0)
+spring_length = 2.0
+margin = 0.2
+
+[node name="SpringMountedCamera3D" type="Camera3D" parent="CameraSpringArm3D"]
+current = true

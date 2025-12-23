@@ -9,6 +9,7 @@ extends CanvasLayer
 		
 @onready var gui: CarGUI = $CarGUI
 @onready var reset_message: Label = %ResetMessage
+@onready var lap_count_label: Label = %LapCount
 
 var max_laps:
 	set(value):
@@ -22,7 +23,8 @@ func _ready():
 	refesh_max_laps_text()
 	
 func refesh_max_laps_text():
-	%LapCount.text = str(car.current_lap) + " of "  + str(max_laps)
+	if car:
+		lap_count_label.text = str(car.current_lap) + " of "  + str(max_laps)
 
 func connect_signals(car: Car):
 	if car:

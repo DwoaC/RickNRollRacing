@@ -1,27 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bo136s21spad7"]
+[gd_scene load_steps=5 format=3 uid="uid://bo136s21spad7"]
 
 [ext_resource type="Script" uid="uid://wa8fcxpyoxdq" path="res://worlds/main.gd" id="1_q4nr1"]
-[ext_resource type="PackedScene" uid="uid://ekj5r33q5fo7" path="res://gui/car_gui/car_gui.tscn" id="2_s6w6s"]
-[ext_resource type="PackedScene" uid="uid://c4jtxt7avcl0m" path="res://objects/camera/spring_mounted_camera.tscn" id="3_t4qxf"]
+[ext_resource type="PackedScene" uid="uid://fvlb3imihg64" path="res://worlds/car_sub_viewport_container.tscn" id="2_t4qxf"]
 [ext_resource type="PackedScene" uid="uid://bfkasrbu3llwy" path="res://worlds/world.tscn" id="4_04cs4"]
 [ext_resource type="PackedScene" uid="uid://lesp7rhwlcij" path="res://objects/cars/player.tscn" id="5_h51hw"]
-
-[sub_resource type="GDScript" id="GDScript_m61u3"]
-script/source = "extends SubViewportContainer
-
-@export var car: Car:
-	set(new_car):
-		car = new_car
-		if camera:
-			camera.car = car
-		
-@onready var camera: CameraPivot = %Camera
-@onready var ui: CanvasLayer = %CanvasLayer
-
-func _ready() -> void:
-	if car and not camera.car:
-		camera.car = car
-"
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_q4nr1")
@@ -35,44 +17,13 @@ grow_vertical = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 
-[node name="SubViewportContainer1" type="SubViewportContainer" parent="GridContainer"]
+[node name="SubViewportContainer1" parent="GridContainer" node_paths=PackedStringArray("car") instance=ExtResource("2_t4qxf")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-stretch = true
-script = SubResource("GDScript_m61u3")
+car = NodePath("../../Player1")
 
-[node name="SubViewport1" type="SubViewport" parent="GridContainer/SubViewportContainer1"]
-handle_input_locally = false
-audio_listener_enable_2d = true
-audio_listener_enable_3d = true
-size = Vector2i(1152, 324)
-render_target_update_mode = 4
-
-[node name="CanvasLayer" parent="GridContainer/SubViewportContainer1/SubViewport1" node_paths=PackedStringArray("car") instance=ExtResource("2_s6w6s")]
-unique_name_in_owner = true
-car = NodePath("../../../../Player1")
-
-[node name="Camera" parent="GridContainer/SubViewportContainer1/SubViewport1" node_paths=PackedStringArray("car") instance=ExtResource("3_t4qxf")]
-unique_name_in_owner = true
-car = NodePath("../../../../Player1")
-
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="GridContainer"]
+[node name="SubViewportContainer2" parent="GridContainer" node_paths=PackedStringArray("car") instance=ExtResource("2_t4qxf")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-stretch = true
-
-[node name="SubViewport2" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
-handle_input_locally = false
-size = Vector2i(1152, 324)
-render_target_update_mode = 4
-
-[node name="CanvasLayer" parent="GridContainer/SubViewportContainer2/SubViewport2" node_paths=PackedStringArray("car") instance=ExtResource("2_s6w6s")]
-car = NodePath("../../../../Player2")
-
-[node name="CameraPivot" parent="GridContainer/SubViewportContainer2/SubViewport2" node_paths=PackedStringArray("car") instance=ExtResource("3_t4qxf")]
-car = NodePath("../../../../Player2")
+car = NodePath("../../Player2")
 
 [node name="World" parent="." node_paths=PackedStringArray("cars") instance=ExtResource("4_04cs4")]
 unique_name_in_owner = true

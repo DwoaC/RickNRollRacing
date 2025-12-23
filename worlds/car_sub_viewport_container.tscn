@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://fvlb3imihg64"]
+
+[ext_resource type="PackedScene" uid="uid://ekj5r33q5fo7" path="res://gui/car_gui/car_gui.tscn" id="1_arpq0"]
+[ext_resource type="PackedScene" uid="uid://c4jtxt7avcl0m" path="res://objects/camera/spring_mounted_camera.tscn" id="2_w7okf"]
+
+[sub_resource type="GDScript" id="GDScript_m61u3"]
+script/source = "extends SubViewportContainer
+
+@export var car: Car:
+	set(new_car):
+		car = new_car
+		if camera:
+			camera.car = car
+		if ui:
+			ui.car = car
+		
+@onready var camera: CameraPivot = %Camera
+@onready var ui: CanvasLayer = %CanvasLayer
+
+func _ready() -> void:
+	if car and not camera.car:
+		camera.car = car
+	if car and not ui.car:
+		ui.car = car
+"
+
+[node name="SubViewportContainer1" type="SubViewportContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+script = SubResource("GDScript_m61u3")
+
+[node name="SubViewport1" type="SubViewport" parent="."]
+handle_input_locally = false
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
+size = Vector2i(2, 2)
+render_target_update_mode = 4
+
+[node name="CanvasLayer" parent="SubViewport1" instance=ExtResource("1_arpq0")]
+unique_name_in_owner = true
+
+[node name="Camera" parent="SubViewport1" instance=ExtResource("2_w7okf")]
+unique_name_in_owner = true

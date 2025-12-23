@@ -1,5 +1,8 @@
 class_name CameraPivot
 extends Node3D
+
+@export var car: Car
+ 
 @export_group("Camera Settings")
 @export var follow_speed: float = 10.0   # How 'tight' the spring is
 @export var min_fov: float = 75.0       # FOV at standstill
@@ -8,9 +11,11 @@ extends Node3D
 @export var offset: Vector3 = Vector3(0, 0, 0)
 
 @onready var cam: Camera3D = $CameraSpringArm3D/SpringMountedCamera3D
-@onready var car: Car = get_parent()
+#@onready var car: Car = get_parent()
 
 func _physics_process(delta):
+	if not car:
+		return
 	# 1. FOLLOW POSITION (The 'Spring' Action)
 	# We use global_position so we can smooth the movement
 	var target_pos = car.global_position + offset

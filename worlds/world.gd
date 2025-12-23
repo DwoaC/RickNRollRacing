@@ -1,4 +1,5 @@
 extends Node3D
+class_name World
 
 @export var track_path: String
 @export var cars: Array[Car]
@@ -17,10 +18,11 @@ var max_laps = INF
 signal track_changed(track: Track)
 signal max_laps_changed(max_laps)
 
-
 func _ready() -> void:
 	add_ai()
 	setup_signals()
+	
+func start():
 	load_level()
 	place_cars()
 

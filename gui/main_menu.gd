@@ -52,7 +52,7 @@ func _on_quit_btn_pressed():
 	get_tree().quit()
 	
 func _on_two_player_btn_pressed():
-	GamerManager.load_level("res://worlds/multiplayer_main.tscn")
+	GamerManager.load_level("res://worlds/main.tscn")
 	hide()
 	
 func _on_three_player_btn_pressed():

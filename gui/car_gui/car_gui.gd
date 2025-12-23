@@ -1,7 +1,12 @@
 class_name CarGUICanvas
 extends CanvasLayer
 
-@export var car: Car
+@export var car: Car:
+	set(new_car):
+		disconnect_signals(car)
+		car = new_car
+		connect_signals(car)
+		
 @onready var gui: CarGUI = $CarGUI
 @onready var reset_message: Label = %ResetMessage
 
@@ -10,12 +15,24 @@ var max_laps:
 		if is_inf(value):
 			value = "∞"
 		max_laps = value
-		%LapCount.text = str(car.current_lap) + " of "  + str(max_laps)
-
+		refesh_max_laps_text()
+		
 func _ready():
+	connect_signals(car)
+	refesh_max_laps_text()
+	
+func refesh_max_laps_text():
+	%LapCount.text = str(car.current_lap) + " of "  + str(max_laps)
+
+func connect_signals(car: Car):
 	if car:
 		car.speed_updated.connect(_on_player_speed_updated)
 		car.lap_completed.connect(_on_player_lap_completed)
+		
+func disconnect_signals(car: Car):
+	if car:
+		car.speed_updated.disconnect(_on_player_speed_updated)
+		car.lap_completed.disconnect(_on_player_lap_completed)
 
 func on_track_changed(track: Track) -> void:
 	%LapCount.text = str(car.current_lap) + " of "  + str(max_laps)

@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://7cbhbnwj6ihi"]
 
 [ext_resource type="Script" uid="uid://x57om6mljfj4" path="res://objects/cars/car.gd" id="1_k4uvk"]
-[ext_resource type="BoxMesh" uid="uid://bfqrqph2phwr0" path="res://worlds/world_1.tres" id="2_jf0qi"]
+[ext_resource type="BoxMesh" uid="uid://bfqrqph2phwr0" path="res://objects/cars/world_1.tres" id="2_jf0qi"]
 [ext_resource type="AudioStream" uid="uid://bbm06c4emktav" path="res://assets/sound/engines/loop_0.wav" id="3_jeh81"]
 [ext_resource type="AudioStream" uid="uid://df0eapmcrtmot" path="res://assets/sound/engines/loop_5.wav" id="4_wqf37"]
 [ext_resource type="AudioStream" uid="uid://caggpdhpgls4x" path="res://assets/sound/impact/UI_Noisy_Impact_09.wav" id="5_v64pd"]

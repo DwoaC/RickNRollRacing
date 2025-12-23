@@ -41,12 +41,13 @@ func add_ai():
 func setup_signals():
 	for car in cars:
 		track_changed.connect(car.on_track_changed)
-		for node in car.get_children():
-			if node is CarGUICanvas:				
-				track_changed.connect(node.on_track_changed)
-				max_laps_changed.connect(node.on_max_laps_changed)
-				car.car_flipped.connect(node.on_car_flipped)
-				car.car_reset.connect(node.on_car_reset)
+	
+	var all_car_guis = get_parent().find_children("*", "CarGUICanvas", true)
+	
+	for car_gui in all_car_guis:
+		print("connecting " + str(car_gui))
+		track_changed.connect(car_gui.on_track_changed)
+		max_laps_changed.connect(car_gui.on_max_laps_changed)
 
 func load_level():
 	print("Loading " + track_path)

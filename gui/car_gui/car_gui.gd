@@ -28,11 +28,15 @@ func connect_signals(car: Car):
 	if car:
 		car.speed_updated.connect(_on_player_speed_updated)
 		car.lap_completed.connect(_on_player_lap_completed)
+		car.car_flipped.connect(on_car_flipped)
+		car.car_reset.connect(on_car_reset)
 		
 func disconnect_signals(car: Car):
 	if car:
 		car.speed_updated.disconnect(_on_player_speed_updated)
 		car.lap_completed.disconnect(_on_player_lap_completed)
+		car.car_flipped.connect(on_car_flipped)
+		car.car_reset.connect(on_car_reset)
 
 func on_track_changed(track: Track) -> void:
 	%LapCount.text = str(car.current_lap) + " of "  + str(max_laps)

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dikbr8peyej5t" path="res://worlds/world.gd" id="1_hm5vt"]
 [ext_resource type="PackedScene" uid="uid://c0gtmb7t2u3hd" path="res://objects/environments/world_environment.tscn" id="2_w600y"]
-[ext_resource type="PackedScene" uid="uid://ekj5r33q5fo7" path="res://objects/gui/car_gui.tscn" id="3_0opm1"]
+[ext_resource type="PackedScene" uid="uid://ekj5r33q5fo7" path="res://gui/car_gui/car_gui.tscn" id="3_0opm1"]
 [ext_resource type="PackedScene" uid="uid://lesp7rhwlcij" path="res://objects/cars/player.tscn" id="4_ryn78"]
 [ext_resource type="PackedScene" uid="uid://c4jtxt7avcl0m" path="res://objects/camera/spring_mounted_camera.tscn" id="5_d3bu8"]
 

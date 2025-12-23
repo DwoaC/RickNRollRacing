@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://528pcnferbo2"]
 
-[ext_resource type="Script" path="res://objects/bullets/bullet.gd" id="1_0x4i6"]
-[ext_resource type="AudioStream" uid="uid://c7ggt087w06mw" path="res://sound/guns/SCIWeap_Shot Pulse YR 05_RSCPC_SFEW.wav" id="2_8v8dl"]
+[ext_resource type="Script" uid="uid://bn4m4yuxt2b5a" path="res://objects/bullets/bullet.gd" id="1_0x4i6"]
+[ext_resource type="AudioStream" uid="uid://c7ggt087w06mw" path="res://assets/sound/guns/SCIWeap_Shot Pulse YR 05_RSCPC_SFEW.wav" id="2_8v8dl"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xgkx3"]
 albedo_color = Color(1, 0.0666667, 0.0352941, 0.580392)

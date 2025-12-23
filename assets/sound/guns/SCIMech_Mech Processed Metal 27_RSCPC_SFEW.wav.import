@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cwaws5agcgooi"
+path="res://.godot/imported/SCIMech_Mech Processed Metal 27_RSCPC_SFEW.wav-568e3f867b3ce8aa5fc7c340500155ec.sample"
+
+[deps]
+
+source_file="res://assets/sound/guns/SCIMech_Mech Processed Metal 27_RSCPC_SFEW.wav"
+dest_files=["res://.godot/imported/SCIMech_Mech Processed Metal 27_RSCPC_SFEW.wav-568e3f867b3ce8aa5fc7c340500155ec.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

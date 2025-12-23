@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://d4jbohmbtbo51"]
 
-[ext_resource type="Script" path="res://objects/effects/car_explosion.gd" id="1_xsnew"]
-[ext_resource type="AudioStream" uid="uid://dcxk1uhj5ehas" path="res://sound/explosions/DESTRCrsh_Designed Car Explosion With Metal Breaking And Glass Shattering  06_DDUMAIS_NONE.wav" id="2_qjhhv"]
+[ext_resource type="Script" uid="uid://c3knaxkiaotmy" path="res://objects/effects/car_explosion.gd" id="1_xsnew"]
+[ext_resource type="AudioStream" uid="uid://dcxk1uhj5ehas" path="res://assets/sound/explosions/DESTRCrsh_Designed Car Explosion With Metal Breaking And Glass Shattering  06_DDUMAIS_NONE.wav" id="2_qjhhv"]
 
 [sub_resource type="Gradient" id="Gradient_jr0tc"]
 colors = PackedColorArray(0.562567, 0.534106, 0.00862368, 1, 0.885317, 0.105873, 0, 1)

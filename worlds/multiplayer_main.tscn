@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://0fpp5mw0bsh0"]
 
-[ext_resource type="Script" path="res://worlds/multiplayer_main.gd" id="1_qjy36"]
-[ext_resource type="PackedScene" uid="uid://bfkasrbu3llwy" path="res://world_multiplayer.tscn" id="2_htc1g"]
+[ext_resource type="Script" uid="uid://7r563ptyo6s6" path="res://worlds/multiplayer_main.gd" id="1_qjy36"]
+[ext_resource type="PackedScene" uid="uid://bfkasrbu3llwy" path="res://worlds/world_multiplayer.tscn" id="2_htc1g"]
 [ext_resource type="PackedScene" uid="uid://lesp7rhwlcij" path="res://objects/cars/player.tscn" id="3_jdi6j"]
 [ext_resource type="PackedScene" uid="uid://c4jtxt7avcl0m" path="res://objects/camera/spring_mounted_camera.tscn" id="4_cp7jv"]
-[ext_resource type="PackedScene" uid="uid://ekj5r33q5fo7" path="res://objects/gui/car_gui.tscn" id="5_efehu"]
+[ext_resource type="PackedScene" uid="uid://ekj5r33q5fo7" path="res://gui/car_gui/car_gui.tscn" id="5_efehu"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_qjy36")

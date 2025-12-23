@@ -1,0 +1,156 @@
+[gd_scene load_steps=3 format=3 uid="uid://ekj5r33q5fo7"]
+
+[ext_resource type="Script" uid="uid://ci2axcq8c8a80" path="res://gui/car_gui/car_gui.gd" id="1_50u3v"]
+[ext_resource type="Script" uid="uid://gf8fwn0skk4q" path="res://gui/car_gui/player_gui.gd" id="1_x28rw"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_50u3v")
+
+[node name="CarGUI" type="VBoxContainer" parent="."]
+offset_right = 102.0
+offset_bottom = 50.0
+script = ExtResource("1_x28rw")
+
+[node name="SpeedBox" type="HBoxContainer" parent="CarGUI"]
+layout_mode = 2
+
+[node name="SpeedLabel" type="Label" parent="CarGUI/SpeedBox"]
+layout_mode = 2
+text = "Speed:"
+
+[node name="Speed" type="Label" parent="CarGUI/SpeedBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0 KPH"
+
+[node name="RawSpeed" type="Label" parent="CarGUI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "0 KPH"
+
+[node name="LapBox" type="HBoxContainer" parent="CarGUI"]
+layout_mode = 2
+
+[node name="LapLabel" type="Label" parent="CarGUI/LapBox"]
+layout_mode = 2
+text = "Laps:"
+
+[node name="LapCount" type="Label" parent="CarGUI/LapBox"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SuspensionBox" type="HBoxContainer" parent="CarGUI"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CarGUI/SuspensionBox"]
+layout_mode = 2
+text = "Suspension"
+
+[node name="FLCompression" type="ProgressBar" parent="CarGUI/SuspensionBox"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+fill_mode = 3
+show_percentage = false
+
+[node name="FRCompression" type="ProgressBar" parent="CarGUI/SuspensionBox"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+fill_mode = 3
+show_percentage = false
+
+[node name="BLCompression" type="ProgressBar" parent="CarGUI/SuspensionBox"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+fill_mode = 3
+show_percentage = false
+
+[node name="BRCompression" type="ProgressBar" parent="CarGUI/SuspensionBox"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+fill_mode = 3
+show_percentage = false
+
+[node name="SuspensionTuningBox" type="VBoxContainer" parent="CarGUI"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+text = "Stiffness"
+
+[node name="Stiffness" type="HSlider" parent="CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+max_value = 60.0
+step = 0.25
+
+[node name="Label2" type="Label" parent="CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+text = "Max Force"
+
+[node name="MaxForce" type="HSlider" parent="CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+max_value = 8000.0
+
+[node name="Label3" type="Label" parent="CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+text = "DampingCompression"
+
+[node name="DampingCompression" type="HSlider" parent="CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+max_value = 4.0
+step = 0.1
+
+[node name="Label4" type="Label" parent="CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+text = "DampingRelaxation"
+
+[node name="DampingRelaxation" type="HSlider" parent="CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+max_value = 4.0
+step = 0.1
+
+[node name="Label5" type="Label" parent="CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+text = "RollInfluence"
+
+[node name="RollInfluence" type="HSlider" parent="CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+max_value = 4.0
+step = 0.1
+
+[node name="Label6" type="Label" parent="CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+text = "COG Y"
+
+[node name="COGY" type="HSlider" parent="CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+min_value = -0.3
+max_value = 0.3
+step = 0.01
+value = -0.3
+
+[node name="Label7" type="Label" parent="CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+text = "Front Friction Slip"
+
+[node name="FrictionSlipFront" type="HSlider" parent="CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+max_value = 8.0
+step = 0.1
+
+[node name="Label8" type="Label" parent="CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+text = "Rear Friction Slip"
+
+[node name="FrictionSlipRear" type="HSlider" parent="CarGUI/SuspensionTuningBox"]
+layout_mode = 2
+max_value = 8.0
+step = 0.1
+
+[node name="ResetMessage" type="Label" parent="CarGUI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Press 'Fire' to reset"

@@ -1,13 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://0fpp5mw0bsh0"]
+[gd_scene load_steps=5 format=3 uid="uid://0fpp5mw0bsh0"]
 
-[ext_resource type="Script" uid="uid://7r563ptyo6s6" path="res://worlds/multiplayer_main.gd" id="1_qjy36"]
-[ext_resource type="PackedScene" uid="uid://bfkasrbu3llwy" path="res://worlds/world_multiplayer.tscn" id="2_htc1g"]
+[ext_resource type="PackedScene" uid="uid://bfkasrbu3llwy" path="res://worlds/world.tscn" id="2_htc1g"]
 [ext_resource type="PackedScene" uid="uid://lesp7rhwlcij" path="res://objects/cars/player.tscn" id="3_jdi6j"]
 [ext_resource type="PackedScene" uid="uid://c4jtxt7avcl0m" path="res://objects/camera/spring_mounted_camera.tscn" id="4_cp7jv"]
 [ext_resource type="PackedScene" uid="uid://ekj5r33q5fo7" path="res://gui/car_gui/car_gui.tscn" id="5_efehu"]
 
 [node name="Main" type="Node3D"]
-script = ExtResource("1_qjy36")
 
 [node name="GridContainer" type="GridContainer" parent="."]
 anchors_preset = 15
@@ -32,14 +30,9 @@ audio_listener_enable_3d = true
 size = Vector2i(576, 648)
 render_target_update_mode = 4
 
-[node name="World" parent="GridContainer/SubViewportContainer1/SubViewport1" node_paths=PackedStringArray("cars") instance=ExtResource("2_htc1g")]
-track_path = "res://tracks/track_1.tscn"
-cars = [NodePath("../Player1"), NodePath("../../../SubViewportContainer2/SubViewport2/Player2")]
-n_ai = 4
-
 [node name="Player1" parent="GridContainer/SubViewportContainer1/SubViewport1" instance=ExtResource("3_jdi6j")]
-max_contacts_reported = 0
 contact_monitor = false
+max_contacts_reported = 0
 
 [node name="CameraPivot1" parent="GridContainer/SubViewportContainer1/SubViewport1/Player1" instance=ExtResource("4_cp7jv")]
 
@@ -58,8 +51,8 @@ size = Vector2i(576, 648)
 render_target_update_mode = 4
 
 [node name="Player2" parent="GridContainer/SubViewportContainer2/SubViewport2" instance=ExtResource("3_jdi6j")]
-max_contacts_reported = 0
 contact_monitor = false
+max_contacts_reported = 0
 input_turn_left = "turn_left_p2"
 input_turn_right = "turn_right_p2"
 input_accelerate = "accelerate_p2"
@@ -70,3 +63,8 @@ input_fire = "fire_p2"
 
 [node name="CanvasLayer" parent="GridContainer/SubViewportContainer2/SubViewport2/Player2" node_paths=PackedStringArray("car") instance=ExtResource("5_efehu")]
 car = NodePath("..")
+
+[node name="World" parent="." node_paths=PackedStringArray("cars") instance=ExtResource("2_htc1g")]
+track_path = "res://tracks/1.tscn"
+cars = [NodePath("../GridContainer/SubViewportContainer1/SubViewport1/Player1"), NodePath("../GridContainer/SubViewportContainer2/SubViewport2/Player2")]
+n_ai = 4

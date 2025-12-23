@@ -1,0 +1,94 @@
+[gd_scene load_steps=3 format=3 uid="uid://5u2ijg5e0xtr"]
+
+[ext_resource type="Script" uid="uid://daiofqy466nwl" path="res://gui/main_menu.gd" id="1_reecx"]
+[ext_resource type="Theme" uid="uid://cyxum4pwm3sf5" path="res://gui/main_theme.tres" id="1_xkvi0"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_xkvi0")
+script = ExtResource("1_reecx")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="TopMenu" type="VBoxContainer" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="Logo" type="TextureRect" parent="MarginContainer/TopMenu"]
+layout_mode = 2
+
+[node name="SinglePlayerButton" type="Button" parent="MarginContainer/TopMenu"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+text = "Single Player"
+
+[node name="MultiplayerButton" type="Button" parent="MarginContainer/TopMenu"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+text = "Multiplayer"
+
+[node name="SettingsButton" type="Button" parent="MarginContainer/TopMenu"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="MarginContainer/TopMenu"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+text = "Quit"
+
+[node name="MultiplayerMenu" type="VBoxContainer" parent="MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="TwoPlayerButton" type="Button" parent="MarginContainer/MultiplayerMenu"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Two Player"
+
+[node name="ThreePlayerButton" type="Button" parent="MarginContainer/MultiplayerMenu"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Three Player"
+
+[node name="FourPlayerButton" type="Button" parent="MarginContainer/MultiplayerMenu"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Four Player"
+
+[node name="MultiplayerBack" type="Button" parent="MarginContainer/MultiplayerMenu"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Back"

@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddspl8kouh0vv"]
+
+[ext_resource type="Script" uid="uid://b0knhaj5nn7js" path="res://gui/main.gd" id="1_npj5w"]
+[ext_resource type="PackedScene" uid="uid://br0l8neg6qv7i" path="res://gui/loading_screen.tscn" id="2_640sx"]
+[ext_resource type="PackedScene" uid="uid://5u2ijg5e0xtr" path="res://gui/main_menu.tscn" id="3_mlcj6"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_npj5w")
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="LoadingScreen" parent="UILayer" instance=ExtResource("2_640sx")]
+
+[node name="MainMenu" parent="UILayer" instance=ExtResource("3_mlcj6")]
+
+[node name="LevelContainer" type="Node3D" parent="."]
+unique_name_in_owner = true

@@ -2,5 +2,13 @@
 
 [ext_resource type="Script" uid="uid://dkp836eq7ay04" path="res://gui/loading_screen.gd" id="1_wmfqg"]
 
-[node name="LoadingScreen" type="Node2D"]
+[node name="LoadingScreen" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_wmfqg")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_right = 4.0
+offset_bottom = 27.0

@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://ccseu5545i53k"]
-
-[ext_resource type="Script" uid="uid://dikbr8peyej5t" path="res://worlds/world.gd" id="1_uqvrd"]
-
-[node name="World" type="Node3D"]
-script = ExtResource("1_uqvrd")
-track_path = "res://tracks/1.tscn"

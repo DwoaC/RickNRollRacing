@@ -19,10 +19,11 @@ signal track_changed(track: Track)
 signal max_laps_changed(max_laps)
 
 func _ready() -> void:
-	add_ai()
-	setup_signals()
+	pass
 	
 func start():
+	add_ai()
+	setup_signals()
 	load_level()
 	place_cars()
 

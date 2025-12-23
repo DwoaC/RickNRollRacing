@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bo136s21spad7"]
+[gd_scene load_steps=6 format=3 uid="uid://bo136s21spad7"]
 
 [ext_resource type="Script" uid="uid://wa8fcxpyoxdq" path="res://worlds/main.gd" id="1_q4nr1"]
 [ext_resource type="PackedScene" uid="uid://fvlb3imihg64" path="res://worlds/car_sub_viewport_container.tscn" id="2_t4qxf"]
-[ext_resource type="PackedScene" uid="uid://bfkasrbu3llwy" path="res://worlds/world.tscn" id="4_04cs4"]
 [ext_resource type="PackedScene" uid="uid://lesp7rhwlcij" path="res://objects/cars/player.tscn" id="5_h51hw"]
+[ext_resource type="PackedScene" uid="uid://c0gtmb7t2u3hd" path="res://objects/environments/world_environment.tscn" id="5_q4nr1"]
+[ext_resource type="Script" uid="uid://dikbr8peyej5t" path="res://worlds/world.gd" id="5_s6w6s"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_q4nr1")
@@ -25,12 +26,6 @@ car = NodePath("../../Player1")
 layout_mode = 2
 car = NodePath("../../Player2")
 
-[node name="World" parent="." node_paths=PackedStringArray("cars") instance=ExtResource("4_04cs4")]
-unique_name_in_owner = true
-track_path = "res://tracks/1.tscn"
-cars = [NodePath("../Player1"), NodePath("../Player2")]
-n_ai = 4
-
 [node name="Player1" parent="." instance=ExtResource("5_h51hw")]
 contact_monitor = false
 max_contacts_reported = 0
@@ -43,3 +38,11 @@ input_turn_right = "turn_right_p2"
 input_accelerate = "accelerate_p2"
 input_brake = "brake_p2"
 input_fire = "fire_p2"
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("5_q4nr1")]
+
+[node name="World" type="Node3D" parent="." node_paths=PackedStringArray("cars")]
+unique_name_in_owner = true
+script = ExtResource("5_s6w6s")
+track_path = "res://tracks/1.tscn"
+cars = [NodePath("../Player1"), NodePath("../Player2")]

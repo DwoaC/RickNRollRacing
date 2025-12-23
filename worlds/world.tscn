@@ -1,10 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bfkasrbu3llwy"]
+[gd_scene load_steps=2 format=3 uid="uid://ccseu5545i53k"]
 
-[ext_resource type="Script" path="res://worlds/world.gd" id="1_uqvrd"]
-[ext_resource type="PackedScene" uid="uid://c0gtmb7t2u3hd" path="res://objects/environments/world_environment.tscn" id="2_xwmoq"]
+[ext_resource type="Script" uid="uid://dikbr8peyej5t" path="res://worlds/world.gd" id="1_uqvrd"]
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_uqvrd")
-track_path = "res://tracks/track_2.tscn"
-
-[node name="WorldEnvironment" parent="." instance=ExtResource("2_xwmoq")]
+track_path = "res://tracks/1.tscn"

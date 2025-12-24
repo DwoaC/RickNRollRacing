@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://bo136s21spad7"]
+
+[ext_resource type="Script" uid="uid://wa8fcxpyoxdq" path="res://worlds/sim.gd" id="1_1ssbd"]
+[ext_resource type="PackedScene" uid="uid://fvlb3imihg64" path="res://worlds/car_sub_viewport_container.tscn" id="2_xh131"]
+[ext_resource type="PackedScene" uid="uid://lesp7rhwlcij" path="res://objects/cars/player.tscn" id="3_f3fqj"]
+[ext_resource type="PackedScene" uid="uid://c0gtmb7t2u3hd" path="res://objects/environments/world_environment.tscn" id="4_v5ohi"]
+[ext_resource type="Script" uid="uid://dikbr8peyej5t" path="res://worlds/world.gd" id="5_py2pg"]
+
+[node name="Sim" type="Node3D"]
+script = ExtResource("1_1ssbd")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+
+[node name="SubViewportContainer1" parent="GridContainer" node_paths=PackedStringArray("car") instance=ExtResource("2_xh131")]
+layout_mode = 2
+car = NodePath("../../Player1")
+
+[node name="SubViewportContainer2" parent="GridContainer" node_paths=PackedStringArray("car") instance=ExtResource("2_xh131")]
+layout_mode = 2
+car = NodePath("../../Player2")
+
+[node name="Player1" parent="." instance=ExtResource("3_f3fqj")]
+contact_monitor = false
+max_contacts_reported = 0
+player_reference = "p1"
+
+[node name="Player2" parent="." instance=ExtResource("3_f3fqj")]
+contact_monitor = false
+max_contacts_reported = 0
+player_reference = "p2"
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("4_v5ohi")]
+
+[node name="World" type="Node3D" parent="." node_paths=PackedStringArray("cars")]
+unique_name_in_owner = true
+script = ExtResource("5_py2pg")
+track_path = "res://tracks/1.tscn"
+cars = [NodePath("../Player1"), NodePath("../Player2")]

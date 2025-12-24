@@ -1,7 +1,9 @@
 # GameManager.gd (Autoload)
 extends Node
 
-var current_level_node = null
+var MAX_CARS = 6
+
+var sim_node: Sim = null
 
 func load_level(level_path: String):
 	# 1. Show Loading Screen
@@ -10,9 +12,16 @@ func load_level(level_path: String):
 	var new_level = level_scene.instantiate()
 	
 	# 3. Clear old level
-	if current_level_node:
-		current_level_node.queue_free()
+	if sim_node:
+		sim_node.queue_free()
 	
 	# 4. Add to the Main container
 	get_tree().root.get_node("Main/LevelContainer").add_child(new_level)
-	current_level_node = new_level
+	sim_node = new_level
+
+func add_player():
+	sim_node.add_player()
+	
+func start_sim():
+	sim_node.n_ai = MAX_CARS - sim_node.player_cars.size()
+	sim_node.start()

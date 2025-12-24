@@ -3,7 +3,7 @@ class_name PlayerCar
 
 var reversing = false
 @export_group("Controls")
-@export var player_reference: String = "p1"
+@export var player_reference: String
 
 var input_turn_left: String
 var input_turn_right: String
@@ -12,6 +12,7 @@ var input_brake: String
 var input_fire: String
 
 func _ready() -> void:
+	assert(player_reference)
 	input_accelerate = "accelerate" + "_" + player_reference
 	input_brake = "brake" + "_" + player_reference
 	input_turn_left = "turn_left" + "_" + player_reference

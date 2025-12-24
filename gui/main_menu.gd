@@ -39,6 +39,8 @@ func _ready():
 func _on_single_player_btn_pressed():
 	# Tell our Main node to start the game
 	GamerManager.load_level("res://worlds/Sim.tscn")
+	GamerManager.add_player()
+	GamerManager.start_sim()
 	hide()
 
 func _on_multiplayer_btn_pressed():
@@ -53,6 +55,9 @@ func _on_quit_btn_pressed():
 	
 func _on_two_player_btn_pressed():
 	GamerManager.load_level("res://worlds/Sim.tscn")
+	GamerManager.add_player()
+	GamerManager.add_player()
+	GamerManager.start_sim()
 	hide()
 	
 func _on_three_player_btn_pressed():

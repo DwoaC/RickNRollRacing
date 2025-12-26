@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="PlayerStatus" load_steps=2 format=3 uid="uid://5tdxnh5734o8"]
+
+[ext_resource type="Script" uid="uid://dfykroq5wpybx" path="res://worlds/player_stats.gd" id="1_4hpbv"]
+
+[resource]
+script = ExtResource("1_4hpbv")
+metadata/_custom_type_script = "uid://dfykroq5wpybx"

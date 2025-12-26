@@ -22,12 +22,12 @@ func _ready() -> void:
 func start():
 	world.start()
 	
-func add_player():
+func add_player(new_player_stats: PlayerStats):
 	if player_cars.size() >= MAX_PLAYERS:
 		return
 	var new_player_car: PlayerCar = player_car_scene.instantiate()
+	new_player_car.player_stats = new_player_stats
 	player_cars.append(new_player_car)
-	new_player_car.player_reference = "p" + str(player_cars.size())
 	add_child(new_player_car)
 	
 	world.cars.append(new_player_car)

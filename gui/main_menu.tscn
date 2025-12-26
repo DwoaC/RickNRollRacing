@@ -41,17 +41,17 @@ alignment = 1
 [node name="Logo" type="TextureRect" parent="MarginContainer/TopMenu"]
 layout_mode = 2
 
-[node name="SinglePlayerButton" type="Button" parent="MarginContainer/TopMenu"]
+[node name="New Game" type="Button" parent="MarginContainer/TopMenu"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-text = "Single Player"
+text = "New Game"
 
-[node name="MultiplayerButton" type="Button" parent="MarginContainer/TopMenu"]
+[node name="QuickRaceButton" type="Button" parent="MarginContainer/TopMenu"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-text = "Multiplayer"
+text = "Quick Race"
 
 [node name="SettingsButton" type="Button" parent="MarginContainer/TopMenu"]
 unique_name_in_owner = true
@@ -72,6 +72,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 30
 alignment = 1
+
+[node name="SinglePlayerButton" type="Button" parent="MarginContainer/MultiplayerMenu"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+text = "Single Player"
 
 [node name="TwoPlayerButton" type="Button" parent="MarginContainer/MultiplayerMenu"]
 unique_name_in_owner = true

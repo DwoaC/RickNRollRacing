@@ -19,8 +19,9 @@ func load_level(level_path: String):
 	get_tree().root.get_node("Main/LevelContainer").add_child(new_level)
 	sim_node = new_level
 
-func add_player():
-	sim_node.add_player()
+func add_player(new_player):
+	new_player.player_reference = "p" + str(sim_node.player_cars.size() + 1) 
+	sim_node.add_player(new_player)
 	
 func start_sim():
 	sim_node.n_ai = MAX_CARS - sim_node.player_cars.size()

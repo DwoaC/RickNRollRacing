@@ -27,7 +27,7 @@ func _ready():
 	first_button.grab_focus()
 	current_menu = %TopMenu
 	%SinglePlayerButton.pressed.connect(_on_single_player_btn_pressed) 
-	%MultiplayerButton.pressed.connect(_on_multiplayer_btn_pressed)
+	%QuickRaceButton.pressed.connect(_on_quick_race_button_pressed)
 	%SettingsButton.pressed.connect(_on_settings_btn_pressed)
 	%QuitButton.pressed.connect(_on_quit_btn_pressed)
 	
@@ -39,12 +39,14 @@ func _ready():
 func _on_single_player_btn_pressed():
 	# Tell our Main node to start the game
 	GamerManager.load_level("res://worlds/Sim.tscn")
-	GamerManager.add_player()
+	
+	var new_player = load("res://resources/player_1.tres")
+	GamerManager.add_player(new_player)
+	
 	GamerManager.start_sim()
 	hide()
 
-func _on_multiplayer_btn_pressed():
-	print("multiplayer")
+func _on_quick_race_button_pressed():
 	current_menu = %MultiplayerMenu
 
 func _on_settings_btn_pressed():
@@ -55,16 +57,48 @@ func _on_quit_btn_pressed():
 	
 func _on_two_player_btn_pressed():
 	GamerManager.load_level("res://worlds/Sim.tscn")
-	GamerManager.add_player()
-	GamerManager.add_player()
+	
+	var new_player = load("res://resources/player_1.tres")
+	GamerManager.add_player(new_player)
+	
+	new_player = load("res://resources/player_2.tres")
+	GamerManager.add_player(new_player)
+	
 	GamerManager.start_sim()
 	hide()
 	
 func _on_three_player_btn_pressed():
-	pass
+	GamerManager.load_level("res://worlds/Sim.tscn")
+	
+	var new_player = load("res://resources/player_1.tres")
+	GamerManager.add_player(new_player)
+	
+	new_player = load("res://resources/player_2.tres")
+	GamerManager.add_player(new_player)
+	
+	new_player = load("res://resources/player_3.tres")
+	GamerManager.add_player(new_player)
+	
+	GamerManager.start_sim()
+	hide()
 
 func _on_four_player_btn_pressed():
-	pass
+	GamerManager.load_level("res://worlds/Sim.tscn")
+
+	var new_player = load("res://resources/player_1.tres")
+	GamerManager.add_player(new_player)
+	
+	new_player = load("res://resources/player_2.tres")
+	GamerManager.add_player(new_player)
+	
+	new_player = load("res://resources/player_3.tres")
+	GamerManager.add_player(new_player)
+	
+	new_player = load("res://resources/player_4.tres")
+	GamerManager.add_player(new_player)
+	
+	GamerManager.start_sim()
+	hide()
 
 func _on_back_pressed() -> void:
 	current_menu = previous_menu

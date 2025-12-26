@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://lesp7rhwlcij"]
 
 [ext_resource type="PackedScene" uid="uid://7cbhbnwj6ihi" path="res://objects/cars/car.tscn" id="1_2nbaw"]
-[ext_resource type="Script" path="res://objects/cars/player.gd" id="2_didy4"]
+[ext_resource type="Script" uid="uid://bpo6kyt2xdgno" path="res://objects/cars/car_player.gd" id="2_didy4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sewkj"]
 albedo_color = Color(0.0666667, 0.133333, 1, 1)
@@ -14,11 +14,6 @@ size = Vector3(1, 0.4, 2)
 
 [node name="Car" instance=ExtResource("1_2nbaw")]
 script = ExtResource("2_didy4")
-input_turn_left = "turn_left"
-input_turn_right = "turn_right"
-input_accelerate = "accelerate"
-input_brake = "brake"
-input_fire = "fire"
 
 [node name="MeshInstance3D" parent="." index="1"]
 mesh = SubResource("BoxMesh_at28m")

@@ -13,7 +13,7 @@ var n_ai: int:
 	set(value):
 		world.n_ai = value
 
-var player_car_scene = preload("res://objects/cars/player.tscn")
+var player_car_scene = preload("res://objects/cars/car_player.tscn")
 var player_viewport_container = preload("res://worlds/car_sub_viewport_container.tscn")
 
 func _ready() -> void:

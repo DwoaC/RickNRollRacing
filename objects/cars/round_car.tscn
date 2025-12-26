@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1feuv6pmur3i"]
+
+[ext_resource type="PackedScene" uid="uid://7cbhbnwj6ihi" path="res://objects/cars/car.tscn" id="1_60lyd"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_wlxyk"]
+
+[node name="Car" instance=ExtResource("1_60lyd")]
+
+[node name="MeshInstance3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, -6.556708e-08, -0.75, 0, 1.5, -3.278354e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_wlxyk")

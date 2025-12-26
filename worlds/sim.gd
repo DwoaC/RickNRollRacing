@@ -16,9 +16,6 @@ var n_ai: int:
 var player_car_scene = preload("res://objects/cars/car_player.tscn")
 var player_viewport_container = preload("res://worlds/car_sub_viewport_container.tscn")
 
-func _ready() -> void:
-	pass
-	
 func start():
 	world.start()
 	
@@ -26,8 +23,8 @@ func add_player(new_player_stats: PlayerStats):
 	if player_cars.size() >= MAX_PLAYERS:
 		return
 	var new_player_car: PlayerCar = player_car_scene.instantiate()
-	new_player_car.player_stats = new_player_stats
 	player_cars.append(new_player_car)
+	new_player_car.stats = new_player_stats
 	add_child(new_player_car)
 	
 	world.cars.append(new_player_car)

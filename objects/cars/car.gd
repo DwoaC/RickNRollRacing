@@ -8,6 +8,13 @@ class_name Car
 @export var respawn_delay: float = 1.5
 @export var max_speed: float = 75.0 / 3.6
 
+var stats: CarStats:
+	get:
+		return stats
+	set(new_stats):
+		stats = new_stats
+		color = stats.car_color
+
 var live_engine_force = 0.0
 var is_dead = false
 
@@ -73,6 +80,30 @@ signal car_reset(car: Car)
 var current_speed: float:
 	get:
 		return linear_velocity.dot(transform.basis.z)
+		
+var color: Color :
+	set(value):
+		if material:
+			var new_material: StandardMaterial3D = material.duplicate()
+			new_material.albedo_color = value
+			material = new_material
+		else:
+			return
+		
+var material: StandardMaterial3D:
+	get:
+		if mesh:
+			return mesh.get_active_material(0)
+		else:
+			return
+	set(new_material):
+		mesh.set_surface_override_material(0, new_material)
+		
+@onready var mesh: MeshInstance3D = %MeshInstance3D
+
+func _ready() -> void:
+	color = stats.car_color
+
 
 func _physics_process(delta):
 	if is_dead:

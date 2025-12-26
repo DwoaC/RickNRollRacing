@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PlayerStats" load_steps=2 format=3 uid="uid://clg7lvth2top7"]
+
+[ext_resource type="Script" uid="uid://dfykroq5wpybx" path="res://resources/player_stats.gd" id="1_660ut"]
+
+[resource]
+script = ExtResource("1_660ut")
+car_color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://dfykroq5wpybx"

@@ -8,6 +8,7 @@ class_name World
 var CAR_OFFSET_H = 2.0
 var CAR_OFFSET_Z = 5.0
 const AI_CAR_SCENE = preload("res://objects/cars/ai.tscn")
+const AI_CAR_STATS = preload("res://resources/ai_stats.tres")
 
 @onready var camera_rig: Node3D = $CameraRig
 
@@ -36,6 +37,7 @@ func place_cars():
 func add_ai():
 	for i in range(n_ai):
 		var car = AI_CAR_SCENE.instantiate()
+		car.stats = AI_CAR_STATS
 		add_child(car)
 		cars.push_front(car)
 

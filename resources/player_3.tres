@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="PlayerStatus" load_steps=2 format=3 uid="uid://ubhpxodj4ok2"]
+[gd_resource type="Resource" script_class="PlayerStats" load_steps=2 format=3 uid="uid://ubhpxodj4ok2"]
 
-[ext_resource type="Script" uid="uid://dfykroq5wpybx" path="res://worlds/player_stats.gd" id="1_x6qkw"]
+[ext_resource type="Script" uid="uid://dfykroq5wpybx" path="res://resources/player_stats.gd" id="1_x6qkw"]
 
 [resource]
 script = ExtResource("1_x6qkw")
-car_color = Color(0.7829504, 0.8832506, 0, 1)
+car_color = Color(0, 1, 0, 1)
 metadata/_custom_type_script = "uid://dfykroq5wpybx"

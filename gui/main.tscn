@@ -8,6 +8,8 @@
 
 [node name="MainMenu" parent="UILayer" instance=ExtResource("3_mlcj6")]
 
+[node name="Controllers" type="Node" parent="UILayer"]
+
 [node name="LevelContainer" type="Node" parent="."]
 unique_name_in_owner = true
 

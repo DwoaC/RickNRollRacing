@@ -40,8 +40,12 @@ func _on_single_player_btn_pressed():
 	# Tell our Main node to start the game
 	GamerManager.load_level("res://worlds/Sim.tscn")
 	
-	var new_player = load("res://resources/player_1.tres")
-	GamerManager.add_player(new_player)
+	var player = load("res://resources/player_1.tres")
+	var car: Car = GamerManager.add_player(player)
+
+	for i in range(7):
+		var ai = load("res://resources/ai_stats.tres")
+		car = GamerManager.add_ai(ai)
 	
 	GamerManager.start_sim()
 	hide()

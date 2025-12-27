@@ -26,26 +26,6 @@ size = Vector3(0.5, 0.1, 10)
 
 [node name="Car" instance=ExtResource("1_vtq5a")]
 script = ExtResource("2_vkg7a")
-engine_force_value = null
-brake_force_value = null
-steer_angle = null
-respawn_delay = null
-max_speed = null
-min_look_ahead = null
-stuck_speed_threshold = null
-speed_multiplier = null
-bullet_scene = null
-explosion_scene = null
-min_pitch = null
-max_pitch = null
-max_speed_for_audio = null
-crash_threshold = null
-squeal_threshold = null
-squeal_max_vol = null
-brake_squeal_threshold = null
-brake_sensitivity = null
-flip_threshold = null
-max_upright_angle = null
 
 [node name="MeshInstance3D" parent="." index="1"]
 mesh = SubResource("BoxMesh_x35v6")

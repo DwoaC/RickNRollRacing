@@ -92,9 +92,10 @@ signal car_reset(car: Car)
 
 @onready var initial_y = $WheelFrontLeft.position.y
 @onready var whisker_forward = %Forward
-@onready var whisker_left = %Left
+var whisker_left:
+	get:
+		return %Left
 @onready var whisker_right = %Right
-
 
 var current_speed: float:
 	get:
@@ -308,10 +309,13 @@ func complete_lap():
 	print("Lap: ", current_lap)
 
 func fire_weapon() -> bool:
-	if not bullet_scene: 
+	print('firing')
+	if not bullet_scene:
+		print('no bullet')
 		return false
 		
 	if not fire_timer.is_stopped():
+		print('timer still running')
 		return false
 	
 	var bullet: Node3D = bullet_scene.instantiate()

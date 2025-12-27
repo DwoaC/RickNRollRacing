@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://7cbhbnwj6ihi"]
+[gd_scene load_steps=16 format=3 uid="uid://7cbhbnwj6ihi"]
 
 [ext_resource type="Script" uid="uid://x57om6mljfj4" path="res://objects/cars/car.gd" id="1_k4uvk"]
 [ext_resource type="BoxMesh" uid="uid://bfqrqph2phwr0" path="res://objects/cars/box_car_mesh.tres" id="2_jf0qi"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://df0eapmcrtmot" path="res://assets/sound/engines/loop_5.wav" id="4_wqf37"]
 [ext_resource type="AudioStream" uid="uid://caggpdhpgls4x" path="res://assets/sound/impact/UI_Noisy_Impact_09.wav" id="5_v64pd"]
 [ext_resource type="AudioStream" uid="uid://ba525dj0q68x4" path="res://assets/sound/tires/tires_squal_loop.wav" id="6_8nqro"]
+[ext_resource type="Script" uid="uid://hef8q0m5jlre" path="res://objects/cars/Whiskers.gd" id="7_ybi78"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dev5v"]
 friction = 0.26
@@ -22,6 +23,17 @@ material = SubResource("StandardMaterial3D_18o44")
 height = 0.1
 radial_segments = 8
 rings = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_luml6"]
+size = Vector3(0.5, 0.1, 10)
+
+[sub_resource type="SphereMesh" id="SphereMesh_huabq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eoy87"]
+size = Vector3(0.5, 0.1, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hae7u"]
+size = Vector3(0.5, 0.1, 10)
 
 [node name="Car" type="VehicleBody3D"]
 collision_layer = 2
@@ -116,7 +128,7 @@ skeleton = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0154731)
 
 [node name="FireTimeout" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 3.0
 one_shot = true
 
 [node name="EngineIdle" type="AudioStreamPlayer3D" parent="."]
@@ -136,3 +148,37 @@ stream = ExtResource("5_v64pd")
 [node name="TireSquealSound" type="AudioStreamPlayer3D" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("6_8nqro")
+
+[node name="Whiskers" type="Node3D" parent="."]
+script = ExtResource("7_ybi78")
+dis_scale = 1.0
+
+[node name="Left" type="ShapeCast3D" parent="Whiskers"]
+unique_name_in_owner = true
+shape = SubResource("BoxShape3D_luml6")
+target_position = Vector3(0.5, 0, 1.25)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Whiskers/Left"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+mesh = SubResource("SphereMesh_huabq")
+
+[node name="Forward" type="ShapeCast3D" parent="Whiskers"]
+unique_name_in_owner = true
+shape = SubResource("BoxShape3D_eoy87")
+target_position = Vector3(0, 0, 1.25)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Whiskers/Forward"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+mesh = SubResource("SphereMesh_huabq")
+
+[node name="Right" type="ShapeCast3D" parent="Whiskers"]
+unique_name_in_owner = true
+shape = SubResource("BoxShape3D_hae7u")
+target_position = Vector3(-0.5, 0, 1.25)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Whiskers/Right"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+mesh = SubResource("SphereMesh_huabq")

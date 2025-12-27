@@ -44,13 +44,23 @@ func process_steering(delta):
 
 func process_whiskers(delta) -> void:
 	if not car:
+		print('not car')
 		return
-	if not car.whisker_left or not car.whisker_forward or not car.whisker_forward:
+		
+	if not car.whisker_left:
+		print('not left ' + str(car.whisker_left))
+		return
+	if not car.whisker_forward:
+		print('not right')
+		return
+	if not car.whisker_forward:
+		print('not forward')
 		return
 	var avoidance = 0.0
 	
 	if car.whisker_forward.is_colliding():
-		var collider: Node3D =  $Whiskers/Forward.get_collider(0)	
+		print("forward")
+		var collider: Node3D =  car.whisker_forward.get_collider(0)	
 		if collider is Car and collider != self:
 			print('fire')
 			fire_weapon.emit()
@@ -58,12 +68,16 @@ func process_whiskers(delta) -> void:
 			steering -= car.stats.steer_angle	
 			
 	if car.whisker_left.is_colliding():
+		print("left")
+		
 		var collider: Node3D =  car.whisker_left.get_collider(0)
 		if collider is Car and collider != self:
 			steering += car.stats.steer_angle
 		
 	if car.whisker_right.is_colliding():
-		var collider: Node3D =  car.whisker_risk.get_collider(0)
+		print("right")
+		
+		var collider: Node3D =  car.whisker_right.get_collider(0)
 		
 		if collider is Car and collider != self:
 			steering -= car.stats.steer_angle

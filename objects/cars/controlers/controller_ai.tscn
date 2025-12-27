@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqmewco5k8kx3"]
+
+[ext_resource type="PackedScene" uid="uid://bjl7vnxuagiln" path="res://objects/cars/controlers/controller.tscn" id="1_28lsa"]
+[ext_resource type="Script" uid="uid://ctivasd60hrsg" path="res://objects/cars/controlers/controller_ai.gd" id="2_5sc6x"]
+
+[node name="Controller" instance=ExtResource("1_28lsa")]
+script = ExtResource("2_5sc6x")

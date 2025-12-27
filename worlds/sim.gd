@@ -7,34 +7,25 @@ var MAX_PLAYERS = 4
 @onready var world: World = %World
 @onready var viewport_container = %GridContainer
 
-var n_ai: int:
-	get:
-		return world.n_ai
-	set(value):
-		world.n_ai = value
 
-var player_car_scene = preload("res://objects/cars/car_player.tscn")
 var player_viewport_container = preload("res://worlds/car_sub_viewport_container.tscn")
 
 func start():
 	world.start()
 	
-func add_player(new_player_stats: PlayerStats):
-	if player_cars.size() >= MAX_PLAYERS:
-		return
-	var new_player_car: PlayerCar = player_car_scene.instantiate()
-	player_cars.append(new_player_car)
-	new_player_car.stats = new_player_stats
-	add_child(new_player_car)
-	
-	world.cars.append(new_player_car)
-	
-	if player_cars.size() > 2:
-		viewport_container.columns = 2
+func add_player(car: Car) -> void:
+	player_cars.append(car)
+	add_child(car)
+	world.cars.append(car)
 		
+func add_viewport(car: Car):
 	var new_player_viewport = player_viewport_container.instantiate()
-	new_player_viewport.car = new_player_car
+	new_player_viewport.car = car
 	new_player_viewport.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	new_player_viewport.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	new_player_viewport.stretch = true
 	viewport_container.add_child(new_player_viewport)
+	
+	if player_cars.size() > 2:
+		viewport_container.columns = 2
+	print("Player cars " + str(viewport_container.columns))

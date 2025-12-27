@@ -8,6 +8,8 @@ class_name Car
 @export var respawn_delay: float = 1.5
 @export var max_speed: float = 75.0 / 3.6
 
+var controller: Controller
+
 var stats: CarStats:
 	get:
 		return stats
@@ -341,3 +343,6 @@ func stabilize_muzzle():
 	
 func process_flipped(delta):
 	pass
+	
+func add_controller(_controller: Controller):
+	controller = _controller

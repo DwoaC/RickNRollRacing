@@ -23,7 +23,6 @@ func _ready() -> void:
 	pass
 	
 func start():
-	add_ai()
 	setup_signals()
 	load_level()
 	place_cars()
@@ -33,13 +32,6 @@ func place_cars():
 	for car in cars:
 		place_car(car, index)
 		index += 1
-
-func add_ai():
-	for i in range(n_ai):
-		var car = AI_CAR_SCENE.instantiate()
-		car.stats = AI_CAR_STATS
-		add_child(car)
-		cars.push_front(car)
 
 func setup_signals():
 	for car in cars:

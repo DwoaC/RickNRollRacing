@@ -36,20 +36,6 @@ func _ready():
 	%FourPlayerButton.pressed.connect(_on_four_player_btn_pressed) 
 	%MultiplayerBack.pressed.connect(_on_back_pressed) 
 	
-func _on_single_player_btn_pressed():
-	# Tell our Main node to start the game
-	GamerManager.load_level("res://worlds/Sim.tscn")
-	
-	var player = load("res://resources/player_1.tres")
-	GamerManager.add_player(player)
-
-	for i in range(7):
-		var ai = load("res://resources/ai_stats.tres")
-		GamerManager.add_ai(ai)
-	
-	GamerManager.start_sim()
-	hide()
-
 func _on_quick_race_button_pressed():
 	current_menu = %MultiplayerMenu
 
@@ -59,47 +45,72 @@ func _on_settings_btn_pressed():
 func _on_quit_btn_pressed():
 	get_tree().quit()
 	
-func _on_two_player_btn_pressed():
+func _on_single_player_btn_pressed():
 	GamerManager.load_level("res://worlds/Sim.tscn")
 	
-	var new_player = load("res://resources/player_1.tres")
-	GamerManager.add_player(new_player)
+	for i in range(5):
+		var ai = load("res://resources/ai_stats.tres")
+		GamerManager.add_ai(ai)
 	
-	new_player = load("res://resources/player_2.tres")
-	GamerManager.add_player(new_player)
+	var player = load("res://resources/player_1.tres")
+	GamerManager.add_player(player)
+	
+	GamerManager.start_sim()
+	hide()
+
+func _on_two_player_btn_pressed():
+	GamerManager.load_level("res://worlds/Sim.tscn")
+
+	for i in range(4):
+		var ai = load("res://resources/ai_stats.tres")
+		GamerManager.add_ai(ai)
+	
+	var player = load("res://resources/player_1.tres")
+	GamerManager.add_player(player)
+	
+	player = load("res://resources/player_2.tres")
+	GamerManager.add_player(player)
 	
 	GamerManager.start_sim()
 	hide()
 	
 func _on_three_player_btn_pressed():
 	GamerManager.load_level("res://worlds/Sim.tscn")
+
+	for i in range(3):
+		var ai = load("res://resources/ai_stats.tres")
+		GamerManager.add_ai(ai)
 	
-	var new_player = load("res://resources/player_1.tres")
-	GamerManager.add_player(new_player)
+	var player = load("res://resources/player_1.tres")
+	GamerManager.add_player(player)
 	
-	new_player = load("res://resources/player_2.tres")
-	GamerManager.add_player(new_player)
+	player = load("res://resources/player_2.tres")
+	GamerManager.add_player(player)
 	
-	new_player = load("res://resources/player_3.tres")
-	GamerManager.add_player(new_player)
-	
+	player = load("res://resources/player_3.tres")
+	GamerManager.add_player(player)
+		
 	GamerManager.start_sim()
 	hide()
 
 func _on_four_player_btn_pressed():
 	GamerManager.load_level("res://worlds/Sim.tscn")
 
-	var new_player = load("res://resources/player_1.tres")
-	GamerManager.add_player(new_player)
+	for i in range(2):
+		var ai = load("res://resources/ai_stats.tres")
+		GamerManager.add_ai(ai)
 	
-	new_player = load("res://resources/player_2.tres")
-	GamerManager.add_player(new_player)
+	var player = load("res://resources/player_1.tres")
+	GamerManager.add_player(player)
 	
-	new_player = load("res://resources/player_3.tres")
-	GamerManager.add_player(new_player)
+	player = load("res://resources/player_2.tres")
+	GamerManager.add_player(player)
 	
-	new_player = load("res://resources/player_4.tres")
-	GamerManager.add_player(new_player)
+	player = load("res://resources/player_3.tres")
+	GamerManager.add_player(player)
+	
+	player = load("res://resources/player_4.tres")
+	GamerManager.add_player(player)
 	
 	GamerManager.start_sim()
 	hide()

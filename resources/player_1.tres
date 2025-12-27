@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_h6f5k")
-car_color = Color(0.55371416, 0.5186787, 0.5588629, 1)
+car_color = Color(0, 0, 0, 1)
 metadata/_custom_type_script = "uid://dfykroq5wpybx"

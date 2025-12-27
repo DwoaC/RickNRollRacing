@@ -309,13 +309,10 @@ func complete_lap():
 	print("Lap: ", current_lap)
 
 func fire_weapon() -> bool:
-	print('firing')
 	if not bullet_scene:
-		print('no bullet')
 		return false
 		
 	if not fire_timer.is_stopped():
-		print('timer still running')
 		return false
 	
 	var bullet: Node3D = bullet_scene.instantiate()
@@ -407,11 +404,24 @@ func on_steer_left():
 func on_steer_right():
 	steering = -steer_angle
 	
+func on_engine_force(_engine_force: float):
+	engine_force = _engine_force
+	
+func on_brake_float(_brake: float):
+	brake = _brake
+	
+func on_steering(_steering: float):
+	steering = _steering
+	
 func add_controller(_controller: Controller):
 	_controller.accelerate.connect(on_accelerate)
 	_controller._brake.connect(on_brake)
 	_controller.fire_weapon.connect(fire_weapon)
 	_controller.steer_left.connect(on_steer_left)
 	_controller.steer_right.connect(on_steer_right)
+	
+	_controller.engine_force_signal.connect(on_engine_force)
+	_controller.brake_signal.connect(on_brake_float)
+	_controller.steering_signal.connect(on_steering)
 	_controller.car = self
 	add_child(_controller)

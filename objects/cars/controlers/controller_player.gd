@@ -23,7 +23,6 @@ func _physics_process(delta: float) -> void:
 func _input(event):
 	# Check if the specific action was JUST pressed down
 	if event.is_action_pressed(input_fire): 
-		print('fire weapon')
 		fire_weapon.emit()
 
 func set_car(new_car):

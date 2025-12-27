@@ -1,7 +1,7 @@
 class_name Whiskers
 extends Node3D
 
-@export var distance = 10
+@export var distance = 1
 @export var dis_scale = 0.05
 
 func _process(_delta):
@@ -10,7 +10,7 @@ func _process(_delta):
 	global_rotation.z = 0
 	
 func update_position():
-	var size = 5.0 + distance / 40
+	var size = 0.5 + distance / 40
 	$Left.target_position = distance * dis_scale * Vector3(-1, 0, 5).normalized()
 	$Left.shape.size.x = size
 	$Forward.target_position = distance * dis_scale  * Vector3(0, 0, 5).normalized()

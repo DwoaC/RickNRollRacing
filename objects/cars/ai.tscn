@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://g5kwvc0ak78m"]
 
 [ext_resource type="PackedScene" uid="uid://7cbhbnwj6ihi" path="res://objects/cars/car.tscn" id="1_vtq5a"]
-[ext_resource type="Script" path="res://objects/cars/ai.gd" id="2_vkg7a"]
-[ext_resource type="Script" path="res://objects/cars/Whiskers.gd" id="3_ucvkr"]
+[ext_resource type="Script" uid="uid://c2sx2l0kuchsd" path="res://objects/cars/ai.gd" id="2_vkg7a"]
+[ext_resource type="Script" uid="uid://hef8q0m5jlre" path="res://objects/cars/Whiskers.gd" id="3_ucvkr"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sewkj"]
 albedo_color = Color(0.0666667, 0.133333, 1, 1)
@@ -26,8 +26,26 @@ size = Vector3(0.5, 0.1, 10)
 
 [node name="Car" instance=ExtResource("1_vtq5a")]
 script = ExtResource("2_vkg7a")
-min_look_ahead = 5.0
-stuck_speed_threshold = 0.5
+engine_force_value = null
+brake_force_value = null
+steer_angle = null
+respawn_delay = null
+max_speed = null
+min_look_ahead = null
+stuck_speed_threshold = null
+speed_multiplier = null
+bullet_scene = null
+explosion_scene = null
+min_pitch = null
+max_pitch = null
+max_speed_for_audio = null
+crash_threshold = null
+squeal_threshold = null
+squeal_max_vol = null
+brake_squeal_threshold = null
+brake_sensitivity = null
+flip_threshold = null
+max_upright_angle = null
 
 [node name="MeshInstance3D" parent="." index="1"]
 mesh = SubResource("BoxMesh_x35v6")
@@ -37,6 +55,7 @@ script = ExtResource("3_ucvkr")
 dis_scale = 1.0
 
 [node name="Left" type="ShapeCast3D" parent="Whiskers" index="0"]
+unique_name_in_owner = true
 shape = SubResource("BoxShape3D_yhv5k")
 target_position = Vector3(0.5, 0, 1.25)
 collision_mask = 2
@@ -46,6 +65,7 @@ transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 mesh = SubResource("SphereMesh_bhdgk")
 
 [node name="Forward" type="ShapeCast3D" parent="Whiskers" index="1"]
+unique_name_in_owner = true
 shape = SubResource("BoxShape3D_26nqt")
 target_position = Vector3(0, 0, 1.25)
 collision_mask = 2
@@ -55,6 +75,7 @@ transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 mesh = SubResource("SphereMesh_bhdgk")
 
 [node name="Right" type="ShapeCast3D" parent="Whiskers" index="2"]
+unique_name_in_owner = true
 shape = SubResource("BoxShape3D_k403e")
 target_position = Vector3(-0.5, 0, 1.25)
 collision_mask = 2

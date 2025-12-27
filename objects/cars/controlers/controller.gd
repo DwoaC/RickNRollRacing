@@ -1,19 +1,19 @@
 class_name Controller
 extends Node
 
-var car: Car
-var stats: CarStats:
+var _car: Car
+var car: Car:
 	get:
-		return car.stats
-
-var steering
-var engine_force
-var brake
-var reversing
-var current_speed: float = 0
+		return _car
+	set(new_car):
+		set_car(new_car)
 
 signal input_provided(throttle: float, steering: float, brake: float)
 signal fire_weapon()
+signal accelerate()
+signal _brake()
+signal steer_left()
+signal steer_right()
 
-func possess(_car: Car):
-	car = _car
+func set_car(new_car: Car):
+	_car = new_car

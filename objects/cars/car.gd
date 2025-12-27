@@ -8,7 +8,11 @@ class_name Car
 @export var respawn_delay: float = 1.5
 @export var max_speed: float = 75.0 / 3.6
 
-var controller: Controller
+@export_group('AI')
+@export var min_look_ahead: float = 5.0
+@export var stuck_speed_threshold: float = 0.5  
+@export var speed_multiplier: float = 2
+
 
 var stats: CarStats:
 	get:
@@ -19,6 +23,14 @@ var stats: CarStats:
 
 var live_engine_force = 0.0
 var is_dead = false
+
+var look_ahead_distance:
+	get:
+		return get_dynamic_look_ahead_distance()
+
+func get_dynamic_look_ahead_distance() -> float:
+	var current_speed = linear_velocity.length()
+	return min_look_ahead + (current_speed * speed_multiplier)
 
 @onready var wheels: Array[VehicleWheel3D]: 
 	get:
@@ -70,6 +82,7 @@ var flip_timer: float = 0.0
 @export var max_upright_angle: float = 0.5
 
 var last_velocity: Vector3 = Vector3.ZERO
+var reversing: bool = false
 
 signal speed_updated(new_speed: float)
 signal suspension_updated(values: Array[float])
@@ -78,6 +91,10 @@ signal car_flipped(car: Car)
 signal car_reset(car: Car)
 
 @onready var initial_y = $WheelFrontLeft.position.y
+@onready var whisker_forward = %Forward
+@onready var whisker_left = %Left
+@onready var whisker_right = %Right
+
 
 var current_speed: float:
 	get:
@@ -106,8 +123,11 @@ var material: StandardMaterial3D:
 func _ready() -> void:
 	color = stats.car_color
 
-
 func _physics_process(delta):
+	engine_force = 0.0
+	brake = 0.0
+	steering = 0.0
+	
 	if is_dead:
 		return
 	process_controls(delta)
@@ -121,6 +141,22 @@ func _physics_process(delta):
 	if current_speed > max_speed:
 		engine_force = 0
 	
+func get_direction_to_target(curve: Curve3D, look_ahead_distance) -> Vector3:
+	# 1. Find where we are on the path (local coordinates)
+	var local_pos = track.main_path.to_local(global_position)
+	var current_offset = curve.get_closest_offset(local_pos)
+	var track_length = curve.get_baked_length()
+	
+	# 2. Look at a point further down the track
+	var target_offset = fmod(current_offset + look_ahead_distance, track_length)
+	#target_offset = clamp(target_offset, 0, 10)
+	var target_pos_local = curve.sample_baked(target_offset)
+	var target_pos_world = track.main_path.to_global(target_pos_local)
+	
+	# 3. Steering Logic: Direction to target
+	var dir_to_target = global_position.direction_to(target_pos_world).normalized()
+	return dir_to_target
+
 func detect_crash(delta):
 	var current_velocity = linear_velocity
 	
@@ -146,7 +182,7 @@ func play_crash_sound(force):
 func process_audio(delta):
 	process_engine_audio(delta)
 	process_tire_squeal(delta)
-	process_break_audio(delta)
+	process_brake_audio(delta)
 
 func process_engine_audio(delta):
 	var target_pitch = remap(current_speed, 0, max_speed_for_audio, min_pitch, max_pitch)
@@ -162,7 +198,7 @@ func process_engine_audio(delta):
 	engine_audio_idle.volume_db = linear_to_db(1.0 - mix_ratio)
 	engine_audio_high.volume_db = linear_to_db(mix_ratio)
 	
-func process_break_audio(delta):
+func process_brake_audio(delta):
 	var current_speed = linear_velocity.length()
 	
 	# We check if the player is pressing the brake (usually Input.get_axis or similar)
@@ -344,5 +380,34 @@ func stabilize_muzzle():
 func process_flipped(delta):
 	pass
 	
+func on_accelerate():
+	engine_force = engine_force_value
+	brake = 0.0
+	reversing = false
+	
+func on_brake():
+	if current_speed > 0.5:
+		brake = brake_force_value 
+		engine_force = 0.0
+		reversing = false
+	elif reversing:
+		engine_force = -engine_force_value * 0.4
+		brake = 0.0
+		reversing = true
+	else:
+		reversing = true
+		
+func on_steer_left():
+	steering = steer_angle
+	
+func on_steer_right():
+	steering = -steer_angle
+	
 func add_controller(_controller: Controller):
-	controller = _controller
+	_controller.accelerate.connect(on_accelerate)
+	_controller._brake.connect(on_brake)
+	_controller.fire_weapon.connect(fire_weapon)
+	_controller.steer_left.connect(on_steer_left)
+	_controller.steer_right.connect(on_steer_right)
+	_controller.car = self
+	add_child(_controller)

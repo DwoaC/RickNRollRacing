@@ -27,27 +27,25 @@ func add_player(car_stats: PlayerStats) -> void:
 	
 	car_stats.player_reference = "p" + str(sim_node.player_cars.size() + 1) 
 	
-	var car: PlayerCar = player_car_scene.instantiate()
+	var car: Car = car_scene.instantiate()
 	car.stats = car_stats
 
 	sim_node.add_player(car)
 	
 	var controller = controller_scene_player.instantiate()
 	
-	controller.stats = car_stats
 	car.add_controller(controller)
 	
 	sim_node.add_viewport(car)
 	
 func add_ai(car_stats: CarStats) -> void:
-	var car: Car = ai_car_scene.instantiate()
+	var car: Car = car_scene.instantiate()
 	car.stats = car_stats
 	
 	sim_node.add_player(car)
 
 	var controller = controller_scene_ai.instantiate()
 	
-	controller.stats = car_stats
 	car.add_controller(controller)
 	
 func start_sim():

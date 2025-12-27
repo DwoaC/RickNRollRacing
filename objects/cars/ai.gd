@@ -1,16 +1,6 @@
 class_name AI
 extends Car
 
-@export var min_look_ahead: float = 5.0
-
-@export var stuck_speed_threshold: float = 0.5  
-
-var look_ahead_distance:
-	get:
-		return get_dynamic_look_ahead_distance()
-	
-var speed_multiplier = 2
-
 func process_controls(delta: float) -> void:
 	if not track: 
 		return
@@ -45,26 +35,6 @@ func process_steering(delta):
 	var side_dot = global_transform.basis.x.dot(dir_to_target)
 	
 	steering = clamp(lerp(steering, side_dot * .8, delta * 10), -steer_angle, steer_angle)
-	
-func get_dynamic_look_ahead_distance() -> float:
-	var current_speed = linear_velocity.length()
-	return min_look_ahead + (current_speed * speed_multiplier)
-
-func get_direction_to_target(curve: Curve3D, look_ahead_distance) -> Vector3:
-	# 1. Find where we are on the path (local coordinates)
-	var local_pos = track.main_path.to_local(global_position)
-	var current_offset = curve.get_closest_offset(local_pos)
-	var track_length = curve.get_baked_length()
-	
-	# 2. Look at a point further down the track
-	var target_offset = fmod(current_offset + look_ahead_distance, track_length)
-	#target_offset = clamp(target_offset, 0, 10)
-	var target_pos_local = curve.sample_baked(target_offset)
-	var target_pos_world = track.main_path.to_global(target_pos_local)
-	
-	# 3. Steering Logic: Direction to target
-	var dir_to_target = global_position.direction_to(target_pos_world).normalized()
-	return dir_to_target
 
 func process_avoidence(delta) -> void:
 	var avoidance = 0.0
